@@ -14,20 +14,11 @@ public class TestLoad : MonoBehaviour
     public string[][] Tile { get => _tile; set => _tile = value; }
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         string value = "";
         bool isFirstLine = true;
         int count = 0;
-
-        for (int i = 0; i < Tile.Length; i++)
-        {
-            //ここで、8*8のジャグ配列をつくる
-            Tile[i] = new string[BOARD_WIDTH];
-            BoardInfo[i] = new int[BOARD_WIDTH];
-            print($"{i}番目の配列の要素数は {Tile[i].Length} です"); //ジャグ配列の要素数を確認
-        }
 
         // Addressables Assets Systemを利用し、Addressables Groupから
         // 読み込む対象のパスを指定し、アセットを読み込む(アセット名をstringで指定)
@@ -54,16 +45,25 @@ public class TestLoad : MonoBehaviour
                         Debug.Log(BoardInfo[count][i]);
                     }
                     //Debug.Log(count); //whileが回っている回数を確認する
-                    //Debug.Log(value); //1行ごとの入力(2行目以降)
+                    //Debug.Log(value); //value...1行ごとの入力(2行目以降)
                     count++;
                 }
             };
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         for (int i = 0; i < Tile.Length; i++)
         {
+            //ここで、8*8のジャグ配列をつくる
+            Tile[i] = new string[BOARD_WIDTH];
+            BoardInfo[i] = new int[BOARD_WIDTH];
+            print($"{i}番目の配列の要素数は {Tile[i].Length} です"); //ジャグ配列の要素数を確認
+
             for (int j = 0; j < Tile[i].Length; j++)
             {
-
+                //ここで盤面のマスに読み込んだ情報を割り当てる
             }
         }
     }
@@ -82,22 +82,5 @@ public class TestLoad : MonoBehaviour
     void Update()
     {
 
-    }
-
-    enum TileState
-    {
-        B_King = -6,
-        B_Queen,
-        B_Rook,
-        B_Bishop,
-        B_Knight,
-        B_Pawn,
-        None = 0,
-        W_Pawn,
-        W_Knight,
-        W_Bishop,
-        W_Rook,
-        W_Queen,
-        W_King,
     }
 }
