@@ -14,6 +14,8 @@ public class TestLoad : MonoBehaviour
     const int BOARD_WIDTH = 8;
     string[][] _board = new string[BOARD_HEIGHT][];
     int[][] _boardInfo = new int[BOARD_HEIGHT][];
+    GameObject _setPiece = null;
+    RaycastHit _hit;
 
     public GameObject[] Pieces { get; set; }
     public string[][] Board { get => _board; set => _board = value; }
@@ -28,7 +30,6 @@ public class TestLoad : MonoBehaviour
         int z = 0;
         GameObject tile = null;
         GameObject setTile = null;
-        GameObject setPiece = null;
 
         // Addressables Assets Systemを利用し、Addressables Groupから
         // 読み込む対象のパスを指定し、アセットを読み込む(アセット名をstringで指定)
@@ -54,14 +55,10 @@ public class TestLoad : MonoBehaviour
                     //===============================================================
                     if (tile != null) //最初は白駒から置く
                     {
-                        if (z % 6 != 0)
-                        {
+                        if (z % 2 != 0)
                             tile = _tiles[0];
-                        }
                         else
-                        {
                             tile = _tiles[1];
-                        }
                     }
 
                     for (int i = 0; i < Board.Length; i++)
@@ -80,29 +77,21 @@ public class TestLoad : MonoBehaviour
                             tile = _tiles[1];
                         }
                         //駒の初期配置
-                        if (BoardInfo[count][i] == 1)
-                            setPiece = Instantiate(_pieces[5], new Vector3(x, 0.5f, z), _pieces[5].transform.rotation);
-                        else if (BoardInfo[count][i] == -1)
-                            setPiece = Instantiate(_pieces[11], new Vector3(x, 0.5f, z), _pieces[11].transform.rotation);
+                        if (BoardInfo[count][i] == 6)
+                            _setPiece = Instantiate(_pieces[5], new Vector3(x, 0.1f, z), _pieces[5].transform.rotation);
+                        else if (BoardInfo[count][i] == -6)
+                            _setPiece = Instantiate(_pieces[11], new Vector3(x, 0.1f, z), _pieces[11].transform.rotation);
 
                         setTile.transform.SetParent(gameObject.transform);
-                        if (setPiece != null)
-                        {
-                            setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                            //↓指定したコンポーネントを持っているかをboolで返す
-                            //　今回は、もっていない場合にコンポーネントを追加する処理
-                            if (!setPiece.GetComponent<PieceMove>())
-                            {
-                                setPiece.AddComponent<PieceMove>();
-                            }
-                        }
-                        x += 3;
+                        if (_setPiece != null)
+                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
+                        x++;
                     }
                     //Debug.Log(count); //whileが回っている回数を確認する
                     //Debug.Log(value); //value...1行ごとの入力(2行目以降)
                     count++;
                     x = 0;
-                    z -= 3;
+                    z--;
                     //===============================================================
                 }
             };
@@ -116,7 +105,6 @@ public class TestLoad : MonoBehaviour
             //ここで、8*8のジャグ配列をつくる
             Board[i] = new string[BOARD_WIDTH];
             BoardInfo[i] = new int[BOARD_WIDTH];
-            //print($"{i}番目の配列の要素数は {Board[i].Length} です");
         }
     }
 
@@ -133,6 +121,41 @@ public class TestLoad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //最終的には全キーボード操作にしてみたい
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    //駒(or マス)を選択する処理を書きたい
+        //    Debug.Log("Click Space");
+        //    if (BoardInfo[0][0] == 0)
+        //    {
+        //        setPiece = Instantiate(_pieces[3], new Vector3(0, 0.1f, 0), _pieces[3].transform.rotation);
+        //        BoardInfo[0][0] = 3;
+        //    }
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    //選択解除の処理を書きたい
+        //    Debug.Log("Click Escape");
+        //}
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out _hit))
+            {
+                //x,zの値を取得
+                int x = (int)_hit.collider.gameObject.transform.position.x;
+                int z = (int)_hit.collider.gameObject.transform.position.z;
+
+                //マスが空のとき
+                if (BoardInfo[Mathf.Abs(z)][x] == 0)
+                {
+                    Instantiate(_pieces[3], new Vector3(x, 0.1f, z), _pieces[3].transform.rotation);
+                    _setPiece = _pieces[3];
+                    BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                }
+            }
+        }
     }
 }
