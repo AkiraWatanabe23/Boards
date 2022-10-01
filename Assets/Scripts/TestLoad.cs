@@ -9,9 +9,9 @@ public class TestLoad : MonoBehaviour
     //配置する駒
     [SerializeField] GameObject[] _pieces = new GameObject[12];
     [SerializeField] GameObject[] _tiles = new GameObject[2];
+    //ジャグ配列を宣言(& 配列に関する変数)
     const int BOARD_HEIGHT = 8;
     const int BOARD_WIDTH = 8;
-    //ジャグ配列を宣言
     string[][] _board = new string[BOARD_HEIGHT][];
     int[][] _boardInfo = new int[BOARD_HEIGHT][];
 
@@ -27,7 +27,8 @@ public class TestLoad : MonoBehaviour
         int x = 0;
         int z = 0;
         GameObject tile = null;
-        GameObject inst = null;
+        GameObject setTile = null;
+        GameObject setPiece = null;
 
         // Addressables Assets Systemを利用し、Addressables Groupから
         // 読み込む対象のパスを指定し、アセットを読み込む(アセット名をstringで指定)
@@ -49,7 +50,7 @@ public class TestLoad : MonoBehaviour
                     }
                     Board[count] = value.Split(',');
 
-                    //盤面を設定する
+                    //盤面の初期設定
                     //===============================================================
                     if (tile != null)
                     {
@@ -70,21 +71,31 @@ public class TestLoad : MonoBehaviour
 
                         if (tile == null || tile == _tiles[1])
                         {
-                            inst = Instantiate(_tiles[0], new Vector3(x, 0, z), _tiles[0].transform.rotation);
+                            setTile = Instantiate(_tiles[0], new Vector3(x, 0, z), _tiles[0].transform.rotation);
                             tile = _tiles[0];
                         }
                         else if (tile == _tiles[0])
                         {
-                            inst = Instantiate(_tiles[1], new Vector3(x, 0, z), _tiles[0].transform.rotation);
+                            setTile = Instantiate(_tiles[1], new Vector3(x, 0, z), _tiles[0].transform.rotation);
                             tile = _tiles[1];
                         }
                         //駒の初期配置
                         if (BoardInfo[count][i] == 1)
-                            Instantiate(_pieces[5], new Vector3(x, 0.5f, z), _pieces[5].transform.rotation);
+                            setPiece = Instantiate(_pieces[5], new Vector3(x, 0.5f, z), _pieces[5].transform.rotation);
                         else if (BoardInfo[count][i] == -1)
-                            Instantiate(_pieces[11], new Vector3(x, 0.5f, z), _pieces[11].transform.rotation);
+                            setPiece = Instantiate(_pieces[11], new Vector3(x, 0.5f, z), _pieces[11].transform.rotation);
 
-                        inst.transform.SetParent(gameObject.transform);
+                        setTile.transform.SetParent(gameObject.transform);
+                        if (setPiece != null)
+                        {
+                            setPiece.transform.SetParent(GameObject.Find("Piece").transform);
+                            //↓指定したコンポーネントを持っているかをboolで返す
+                            //　今回は、もっていない場合にコンポーネントを追加する処理
+                            if (!setPiece.GetComponent<PieceMove>())
+                            {
+                                setPiece.AddComponent<PieceMove>();
+                            }
+                        }
                         x += 3;
                     }
                     //Debug.Log(count); //whileが回っている回数を確認する
@@ -106,11 +117,6 @@ public class TestLoad : MonoBehaviour
             Board[i] = new string[BOARD_WIDTH];
             BoardInfo[i] = new int[BOARD_WIDTH];
             //print($"{i}番目の配列の要素数は {Board[i].Length} です");
-
-            for (int j = 0; j < Board[i].Length; j++)
-            {
-                //ここで盤面のマスに読み込んだ情報を割り当てる
-            }
         }
     }
 
