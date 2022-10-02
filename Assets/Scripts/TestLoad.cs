@@ -64,6 +64,7 @@ public class TestLoad : MonoBehaviour
 
                     for (int i = 0; i < Board.Length; i++)
                     {
+                        //“Ç‚Ýž‚ñ‚¾î•ñ‚ð”Žš‚ÌƒWƒƒƒO”z—ñ‚É•ÏŠ·
                         BoardInfo[count][i] = int.Parse(Board[count][i]);
                         Debug.Log(BoardInfo[count][i]);
 
