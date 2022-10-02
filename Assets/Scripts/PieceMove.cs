@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PieceMove : MonoBehaviour
 {
-    public PieceType Type { get; set; }
+    [SerializeField] PieceType _type;
+    public PieceType Type { get => _type; set => _type = value; }
 
     // Start is called before the first frame update
     void Start()

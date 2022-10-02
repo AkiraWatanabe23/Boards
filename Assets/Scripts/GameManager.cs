@@ -1,25 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    public PlayerPhase Phase { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
-        StateCheck();
+        Phase = PlayerPhase.White;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    //マスの状態を調べる
-    void StateCheck()
+    //どっちのターンか
+    public enum PlayerPhase
     {
-        //駒の有無、位置の変更等でTestLoad.BoardInfo[][] の値を更新する
+        White = 1,
+        Black
     }
 }
