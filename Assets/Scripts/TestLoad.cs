@@ -21,6 +21,7 @@ public class TestLoad : MonoBehaviour
     public GameObject[] Pieces { get; set; }
     public string[][] Board { get => _board; set => _board = value; }
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
+    public GameObject SelectPiece { get; set; }
 
     void Awake()
     {
@@ -160,19 +161,19 @@ public class TestLoad : MonoBehaviour
                         //配置する駒を選べるようにする(現在は指定の駒を置くようになっている)
                         if (_manager.Phase == GameManager.PlayerPhase.White)
                         {
-                            _setPiece = Instantiate(_pieces[3], new Vector3(x, 0.1f, z), _pieces[3].transform.rotation);
+                            _setPiece = Instantiate(SelectPiece, new Vector3(x, 0.1f, z), SelectPiece.transform.rotation);
                             _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                            BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
                             _manager.Phase = GameManager.PlayerPhase.Black;
                         }
                         else if (_manager.Phase == GameManager.PlayerPhase.Black)
                         {
-                            _setPiece = Instantiate(_pieces[9], new Vector3(x, 0.1f, z), _pieces[9].transform.rotation);
+                            _setPiece = Instantiate(SelectPiece, new Vector3(x, 0.1f, z), SelectPiece.transform.rotation);
                             _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                            BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
                             _manager.Phase = GameManager.PlayerPhase.White;
                         }
-                        BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                        BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
                     }
                 }
             }

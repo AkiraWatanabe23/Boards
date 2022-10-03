@@ -177,7 +177,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000014234871720, guid: 88d2a4ad74f35af49867883b21a05bb0, type: 3}
       propertyPath: m_Name
-      value: Chess Knight White 1
+      value: Knight
       objectReference: {fileID: 0}
     - target: {fileID: 4000012074148752, guid: 88d2a4ad74f35af49867883b21a05bb0, type: 3}
       propertyPath: m_RootOrder
@@ -265,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000012089885188, guid: 1113502b7c22ab649b8d1aa9eacc34b8, type: 3}
       propertyPath: m_Name
-      value: Chess Rook White 1
+      value: Rook
       objectReference: {fileID: 0}
     - target: {fileID: 4000013312474350, guid: 1113502b7c22ab649b8d1aa9eacc34b8, type: 3}
       propertyPath: m_RootOrder
@@ -395,7 +395,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000014291839912, guid: da4ed7ffd6948214da16a2e72efe754d, type: 3}
       propertyPath: m_Name
-      value: Chess Bishop White 1
+      value: Bishop
       objectReference: {fileID: 0}
     - target: {fileID: 4000010786065248, guid: da4ed7ffd6948214da16a2e72efe754d, type: 3}
       propertyPath: m_RootOrder
@@ -733,9 +733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fa923badb56124c94586446749917c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tile:
-    serializedVersion: 2
-    m_Bits: 128
   _pieces:
   - {fileID: 1000013277376148, guid: 3605a6e4fde7d594aa08481185959edb, type: 3}
   - {fileID: 1000014234871720, guid: cb0afc2bcef746940a57b9fff95cf079, type: 3}
