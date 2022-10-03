@@ -146,31 +146,34 @@ public class TestLoad : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                                             //↓LayerMaskの7番を指定
-            if (Physics.Raycast(ray, out _hit, 1 << 7))
+            if (Physics.Raycast(ray, out _hit))
             {
-                //x,zの値を取得
-                int x = (int)_hit.collider.gameObject.transform.position.x;
-                int z = (int)_hit.collider.gameObject.transform.position.z;
-
-                //マスが空のとき
-                if (BoardInfo[Mathf.Abs(z)][x] == 0)
+                if (_hit.collider.gameObject.CompareTag("Tile"))
                 {
-                    if (_manager.Phase == GameManager.PlayerPhase.White)
+                    //x,zの値を取得
+                    int x = (int)_hit.collider.gameObject.transform.position.x;
+                    int z = (int)_hit.collider.gameObject.transform.position.z;
+
+                    //マスが空のとき
+                    if (BoardInfo[Mathf.Abs(z)][x] == 0)
                     {
-                        _setPiece = Instantiate(_pieces[3], new Vector3(x, 0.1f, z), _pieces[3].transform.rotation);
-                        _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
+                        //配置する駒を選べるようにする(現在は指定の駒を置くようになっている)
+                        if (_manager.Phase == GameManager.PlayerPhase.White)
+                        {
+                            _setPiece = Instantiate(_pieces[3], new Vector3(x, 0.1f, z), _pieces[3].transform.rotation);
+                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
+                            BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                            _manager.Phase = GameManager.PlayerPhase.Black;
+                        }
+                        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                        {
+                            _setPiece = Instantiate(_pieces[9], new Vector3(x, 0.1f, z), _pieces[9].transform.rotation);
+                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
+                            BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
+                            _manager.Phase = GameManager.PlayerPhase.White;
+                        }
                         BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
-                        _manager.Phase = GameManager.PlayerPhase.Black;
-                        print($"BoardInfo[{Mathf.Abs(z)}][{x}] = {BoardInfo[Mathf.Abs(z)][x]}");
                     }
-                    else if (_manager.Phase == GameManager.PlayerPhase.Black)
-                    {
-                        _setPiece = Instantiate(_pieces[9], new Vector3(x, 0.1f, z), _pieces[9].transform.rotation);
-                        _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                        _manager.Phase = GameManager.PlayerPhase.White;
-                    }
-                    BoardInfo[Mathf.Abs(z)][x] = (int)_setPiece.GetComponent<PieceMove>().Type;
                 }
             }
         }
