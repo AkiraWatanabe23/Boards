@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     }
 
     //ターンが切り替わったタイミングでゲームがクリアされたか判定する
+    //(1ターン分の処理が終わったタイミングで呼ぶのもアリ)
     //クリアされたら、true を返す
     bool WinningCheck()
     {

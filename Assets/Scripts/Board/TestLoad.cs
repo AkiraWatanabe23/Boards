@@ -18,10 +18,10 @@ public class TestLoad : MonoBehaviour
     GameManager _manager;
     RaycastHit _hit;
 
-    public GameObject[] Pieces { get; set; }
+    public GameObject[] Pieces { get => _pieces; set => _pieces = value; }
     public string[][] Board { get => _board; set => _board = value; }
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
-    public GameObject SelectPiece { get; set; }
+    public GameObject SetPiece { get => _setPiece; set => _setPiece = value; }
 
     void Awake()
     {
@@ -81,13 +81,12 @@ public class TestLoad : MonoBehaviour
                         }
                         //駒の初期配置
                         if (BoardInfo[count][i] == 6)
-                            _setPiece = Instantiate(_pieces[5], new Vector3(x, 0.1f, z), _pieces[5].transform.rotation);
+                            Instantiate(Pieces[5], new Vector3(x, 0.1f, z), Pieces[5].transform.rotation, GameObject.Find("Piece").transform);
+                        //↓親オブジェクトを指定し、子オブジェクトに設定
                         else if (BoardInfo[count][i] == -6)
-                            _setPiece = Instantiate(_pieces[11], new Vector3(x, 0.1f, z), _pieces[11].transform.rotation);
+                            Instantiate(Pieces[11], new Vector3(x, 0.1f, z), Pieces[11].transform.rotation, GameObject.Find("Piece").transform);
 
                         setTile.transform.SetParent(gameObject.transform);
-                        if (_setPiece != null)
-                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
                         x++;
                     }
                     //Debug.Log(count); //whileが回っている回数を確認する
@@ -149,7 +148,7 @@ public class TestLoad : MonoBehaviour
 
             if (Physics.Raycast(ray, out _hit))
             {
-                if (_hit.collider.gameObject.CompareTag("Tile"))
+                if (_hit.collider.gameObject.CompareTag("Tile") && SetPiece != null)
                 {
                     //x,zの値を取得
                     int x = (int)_hit.collider.gameObject.transform.position.x;
@@ -161,20 +160,23 @@ public class TestLoad : MonoBehaviour
                         //配置する駒を選べるようにする(現在は指定の駒を置くようになっている)
                         if (_manager.Phase == GameManager.PlayerPhase.White)
                         {
-                            _setPiece = Instantiate(SelectPiece, new Vector3(x, 0.1f, z), SelectPiece.transform.rotation);
-                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
+                            Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
+                            BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
                             _manager.Phase = GameManager.PlayerPhase.Black;
-                        }
+                        } 
                         else if (_manager.Phase == GameManager.PlayerPhase.Black)
                         {
-                            _setPiece = Instantiate(SelectPiece, new Vector3(x, 0.1f, z), SelectPiece.transform.rotation);
-                            _setPiece.transform.SetParent(GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
+                            Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
+                            BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
                             _manager.Phase = GameManager.PlayerPhase.White;
                         }
-                        BoardInfo[Mathf.Abs(z)][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
+                        BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
+                        SetPiece = null;
                     }
+                }
+                else if (SetPiece == null)
+                {
+                    Debug.Log("駒が指定されていません");
                 }
             }
         }
