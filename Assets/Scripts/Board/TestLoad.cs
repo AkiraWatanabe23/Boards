@@ -4,24 +4,25 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+/// <summary>
+/// テキストデータを読み込み、初期配置を設定する処理
+/// 駒を配置する処理
+/// </summary>
 public class TestLoad : MonoBehaviour
 {
     //配置する駒
     [SerializeField] GameObject[] _pieces = new GameObject[12];
     [SerializeField] GameObject[] _tiles = new GameObject[2];
-    //ジャグ配列を宣言(& 配列に関する変数)
-    const int BOARD_HEIGHT = 8;
-    const int BOARD_WIDTH = 8;
-    string[][] _board = new string[BOARD_HEIGHT][];
-    int[][] _boardInfo = new int[BOARD_HEIGHT][];
-    GameObject _setPiece = null;
-    GameManager _manager;
+    //ジャグ配列を宣言
+    string[][] _board = new string[8][];
+    int[][] _boardInfo = new int[8][];
     RaycastHit _hit;
+    GameManager _manager;
 
     public GameObject[] Pieces { get => _pieces; set => _pieces = value; }
     public string[][] Board { get => _board; set => _board = value; }
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
-    public GameObject SetPiece { get => _setPiece; set => _setPiece = value; }
+    public GameObject SetPiece { get; set; }
 
     void Awake()
     {
@@ -105,8 +106,8 @@ public class TestLoad : MonoBehaviour
         for (int i = 0; i < Board.Length; i++)
         {
             //ここで、8*8のジャグ配列をつくる
-            Board[i] = new string[BOARD_WIDTH];
-            BoardInfo[i] = new int[BOARD_WIDTH];
+            Board[i] = new string[8];
+            BoardInfo[i] = new int[8];
         }
 
         _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -125,23 +126,6 @@ public class TestLoad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //最終的には全キーボード操作にしてみたい
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    //駒(or マス)を選択する処理を書きたい
-        //    Debug.Log("Click Space");
-        //    if (BoardInfo[0][0] == 0)
-        //    {
-        //        setPiece = Instantiate(_pieces[3], new Vector3(0, 0.1f, 0), _pieces[3].transform.rotation);
-        //        BoardInfo[0][0] = 3;
-        //    }
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    //選択解除の処理を書きたい
-        //    Debug.Log("Click Escape");
-        //}
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

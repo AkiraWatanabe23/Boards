@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 public class PieceMove : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] PieceType _type;
+    PieceManager _piece;
+    GameManager _manager;
     public PieceType Type { get => _type; set => _type = value; }
-    public PieceManager Piece { get; set; }
-    public GameManager Manager { get; set; }
 
     /// <summary>
     /// ãÓÇÃëIëèàóù(îÒëIëÇ‡Ç¬ÇØÇÈ)
@@ -16,13 +16,16 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Piece.PieceNum == 0)
+        if (_piece.PieceNum == 0)
         {
-            if (gameObject.CompareTag("WhitePiece") && Manager.Phase == GameManager.PlayerPhase.White ||
-                gameObject.CompareTag("BlackPiece") && Manager.Phase == GameManager.PlayerPhase.Black)
+            if (gameObject.CompareTag("WhitePiece") && _manager.Phase == GameManager.PlayerPhase.White ||
+                gameObject.CompareTag("BlackPiece") && _manager.Phase == GameManager.PlayerPhase.Black)
             {
-                Piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
-                Debug.Log(Piece.PieceNum);
+                _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
+                _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
+                _piece.TileNumZ = Mathf.Max((int)gameObject.transform.position.z);
+
+                Debug.Log(_piece.PieceNum);
             }
             else
             {
@@ -38,8 +41,8 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
-        Piece = GetComponentInParent<PieceManager>();
-        Manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _piece = GetComponentInParent<PieceManager>();
+        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
