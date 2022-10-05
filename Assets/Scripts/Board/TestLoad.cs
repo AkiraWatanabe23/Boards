@@ -152,6 +152,7 @@ public class TestLoad : MonoBehaviour
                         {
                             Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
                             BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
+                            Debug.Log($"BoardInfo[{Mathf.Abs(z)}][{x}] ‚Ì’l‚Í {BoardInfo[Mathf.Abs(z)][x]}");
                             _manager.Phase = GameManager.PlayerPhase.White;
                         }
                         BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;

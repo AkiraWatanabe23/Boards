@@ -19,31 +19,48 @@ public class Rook : MonoBehaviour
     public void Movement()
     {
         //前方向
-        for (int i = 0; i < _piece.TileNumZ; i++)
+        for (int i = _piece.TileNumZ; i > 0; i--)
         {
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                if (_board.BoardInfo[i][_piece.TileNumX] == 0 || _board.BoardInfo[i][_piece.TileNumX] < 0)
+                if (_board.BoardInfo[i-1][_piece.TileNumX] <= 0)
                 {
-                    Debug.Log("このマスには進めます");
+                    Debug.Log("このマスには進めます White 前");
                 }
                 else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                if (_board.BoardInfo[i][_piece.TileNumX] == 0 || _board.BoardInfo[i][_piece.TileNumX] > 0)
+                if (_board.BoardInfo[i-1][_piece.TileNumX] >= 0)
                 {
-                    Debug.Log("このマスには進めます");
+                    Debug.Log("このマスには進めます Black 後ろ");
                 }
                 else
                     break;
             }
         }
         //後ろ方向
-        for (int i = 0; i < 7 - _piece.TileNumZ; i++)
+        for (int i = _piece.TileNumZ; i < 7; i++)
         {
-
+            if (_manager.Phase == GameManager.PlayerPhase.White)
+            {
+                if (_board.BoardInfo[i+1][_piece.TileNumX] <= 0)
+                {
+                    Debug.Log("このマスには進めます White　後ろ");
+                }
+                else
+                    break;
+            }
+            else if (_manager.Phase == GameManager.PlayerPhase.Black)
+            {
+                if (_board.BoardInfo[i+1][_piece.TileNumX] >= 0)
+                {
+                    Debug.Log("このマスには進めます Black 後ろ");
+                }
+                else
+                    break;
+            }
         }
         //右方向
         for (int i = 0; i < 7 - _piece.TileNumX; i++)

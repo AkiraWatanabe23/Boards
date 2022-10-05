@@ -23,7 +23,8 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
             {
                 _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                 _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
-                _piece.TileNumZ = Mathf.Max((int)gameObject.transform.position.z);
+                _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
+                _piece.PieceMovement();
 
                 Debug.Log(_piece.PieceNum);
             }
