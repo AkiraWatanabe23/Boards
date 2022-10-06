@@ -16,8 +16,17 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_piece.PieceNum == 0)
+        GameObject selectPiece = null;
+        var go = eventData.pointerCurrentRaycast.gameObject;
+
+        //駒の選択
+        //現在...駒が選ばれていない and 選択状態の駒と新しく選んだ駒が異なる
+        //更新...選択状態の駒と新しく選んだ駒が異なる
+        if (_piece.PieceNum == 0 && selectPiece != go)
         {
+            //選んだ駒と選択状態の駒をそろえる
+            selectPiece = go;
+            //自分のターンに自分の駒を選んだか判定
             if (gameObject.CompareTag("WhitePiece") && _manager.Phase == GameManager.PlayerPhase.White ||
                 gameObject.CompareTag("BlackPiece") && _manager.Phase == GameManager.PlayerPhase.Black)
             {
@@ -25,9 +34,9 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                 _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
                 _piece.PieceMovement();
-
-                Debug.Log(_piece.PieceNum);
+                Debug.Log(go);
             }
+            //相手のターンだった or 自ターンに相手の駒を選んだ
             else
             {
                 Debug.Log("現在は相手のターンです");

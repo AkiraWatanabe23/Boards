@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// ルークの移動探索
+/// </summary>
 public class Rook : MonoBehaviour
 {
     [SerializeField] Material _movable;
@@ -20,23 +22,19 @@ public class Rook : MonoBehaviour
 
     public void Movement()
     {
-        //前方向
+        //前後方向
         for (int i = _piece.TileNumZ; i > 0; i--)
         {
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
                 if (_board.BoardInfo[i-1][_piece.TileNumX] <= 0)
                 {
-                    if (_board.BoardInfo[i - 1][_piece.TileNumX] == 0)
+                    if (_board.BoardInfo[i-1][_piece.TileNumX] == 0)
                     {
-                        _board.Tiles[i - 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
-                        Debug.Log($"このマスには進めます White 前 _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                        _board.Tiles[i-1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
                     }
-                    else if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
-                    {
-                        Debug.Log($"この駒獲れます White 前 _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                    else if (_board.BoardInfo[i-1][_piece.TileNumX] < 0)
                         break;
-                    }
                 }
                 else
                     break;
@@ -47,27 +45,28 @@ public class Rook : MonoBehaviour
                 {
                     if (_board.BoardInfo[i-1][_piece.TileNumX] == 0)
                     {
-                        _board.Tiles[i - 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
-                        Debug.Log($"このマスには進めます Black 後ろ _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                        _board.Tiles[i-1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
                     }
-                    else if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
-                    {
-                        Debug.Log($"この駒獲れます Black 後ろ _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                    else if (_board.BoardInfo[i-1][_piece.TileNumX] > 0)
                         break;
-                    }
                 }
                 else
                     break;
             }
         }
-        //後ろ方向
+
         for (int i = _piece.TileNumZ; i < 7; i++)
         {
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
                 if (_board.BoardInfo[i+1][_piece.TileNumX] <= 0)
                 {
-                    Debug.Log("このマスには進めます White　後ろ");
+                    if (_board.BoardInfo[i+1][_piece.TileNumX] == 0)
+                    {
+                        _board.Tiles[i+1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[i+1][_piece.TileNumX] < 0)
+                        break;
                 }
                 else
                     break;
@@ -76,21 +75,80 @@ public class Rook : MonoBehaviour
             {
                 if (_board.BoardInfo[i+1][_piece.TileNumX] >= 0)
                 {
-                    Debug.Log("このマスには進めます Black 後ろ");
+                    if (_board.BoardInfo[i+1][_piece.TileNumX] == 0)
+                    {
+                        _board.Tiles[i+1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[i+1][_piece.TileNumX] > 0)
+                        break;
                 }
                 else
                     break;
             }
         }
-        //右方向
-        for (int i = 0; i < 7 - _piece.TileNumX; i++)
+        //左右方向
+        for (int i = _piece.TileNumX; i < 7; i++)
         {
-
+            if (_manager.Phase == GameManager.PlayerPhase.White)
+            {
+                if (_board.BoardInfo[_piece.TileNumZ][i+1] <= 0)
+                {
+                    if (_board.BoardInfo[_piece.TileNumZ][i+1] == 0)
+                    {
+                        _board.Tiles[_piece.TileNumZ, i+1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[_piece.TileNumZ][i+1] < 0)
+                        break;
+                }
+                else
+                    break;
+            }
+            else if (_manager.Phase == GameManager.PlayerPhase.Black)
+            {
+                if (_board.BoardInfo[_piece.TileNumZ][i+1] >= 0)
+                {
+                    if (_board.BoardInfo[_piece.TileNumZ][i+1] == 0)
+                    {
+                        _board.Tiles[_piece.TileNumZ, i+1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[_piece.TileNumZ][i+1] > 0)
+                        break;
+                }
+                else
+                    break;
+            }
         }
-        //左方向
-        for (int i = 0; i < _piece.TileNumX; i++)
-        {
 
+        for (int i = _piece.TileNumX; i > 0; i--)
+        {
+            if (_manager.Phase == GameManager.PlayerPhase.White)
+            {
+                if (_board.BoardInfo[_piece.TileNumZ][i-1] <= 0)
+                {
+                    if (_board.BoardInfo[_piece.TileNumZ][i-1] == 0)
+                    {
+                        _board.Tiles[_piece.TileNumZ, i-1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[_piece.TileNumZ][i-1] < 0)
+                        break;
+                }
+                else
+                    break;
+            }
+            else if (_manager.Phase == GameManager.PlayerPhase.Black)
+            {
+                if (_board.BoardInfo[_piece.TileNumZ][i-1] >= 0)
+                {
+                    if (_board.BoardInfo[_piece.TileNumZ][i-1] == 0)
+                    {
+                        _board.Tiles[_piece.TileNumZ, i-1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (_board.BoardInfo[_piece.TileNumZ][i-1] > 0)
+                        break;
+                }
+                else
+                    break;
+            }
         }
     }
 }

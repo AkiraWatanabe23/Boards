@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
+    [SerializeField] Material _select;
     bool[,] _movable = new bool[8, 8];
+    public Material Select { get => _select; set => _select = value; }
     public int PieceNum { get; set; }
     //選択した駒のマス番号を取得する(X,Z)
     public int TileNumX { get; set; }
@@ -15,12 +17,6 @@ public class PieceManager : MonoBehaviour
     void Start()
     {
         PieceNum = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //駒の個別移動処理への遷移
@@ -48,5 +44,13 @@ public class PieceManager : MonoBehaviour
                 Debug.Log("King");
                 break;
         }
+    }
+
+    /// <summary>
+    /// 駒の選択、非選択に関する処理
+    /// </summary>
+    public void PieceSelect()
+    {
+        //すでに駒が選ばれていた場合...他の駒をクリックで選択対象を切り替える
     }
 }
