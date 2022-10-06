@@ -10,9 +10,12 @@ using UnityEngine.AddressableAssets;
 /// </summary>
 public class TestLoad : MonoBehaviour
 {
-    //配置する駒
+    //配置する駒,マス
     [SerializeField] GameObject[] _pieces = new GameObject[12];
-    [SerializeField] GameObject[] _tiles = new GameObject[2];
+    [SerializeField] GameObject[] _tile = new GameObject[2];
+    [SerializeField] GameObject _movableTile;
+    //マスの配列
+    GameObject[,] _tiles = new GameObject[8, 8];
     //ジャグ配列を宣言
     string[][] _board = new string[8][];
     int[][] _boardInfo = new int[8][];
@@ -20,6 +23,7 @@ public class TestLoad : MonoBehaviour
     GameManager _manager;
 
     public GameObject[] Pieces { get => _pieces; set => _pieces = value; }
+    public GameObject[,] Tiles { get => _tiles; set => _tiles = value; }
     public string[][] Board { get => _board; set => _board = value; }
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
     public GameObject SetPiece { get; set; }
@@ -59,9 +63,9 @@ public class TestLoad : MonoBehaviour
                     if (tile != null) //最初は白駒から置く
                     {
                         if (z % 2 != 0)
-                            tile = _tiles[0];
+                            tile = _tile[0];
                         else
-                            tile = _tiles[1];
+                            tile = _tile[1];
                     }
 
                     for (int i = 0; i < Board.Length; i++)
@@ -70,15 +74,19 @@ public class TestLoad : MonoBehaviour
                         BoardInfo[count][i] = int.Parse(Board[count][i]);
                         Debug.Log(BoardInfo[count][i]);
 
-                        if (tile == null || tile == _tiles[1])
+                        if (tile == null || tile == _tile[1])
                         {
-                            setTile = Instantiate(_tiles[0], new Vector3(x, 0, z), _tiles[0].transform.rotation);
-                            tile = _tiles[0];
+                            setTile = Instantiate(_tile[0], new Vector3(x, 0, z), _tile[0].transform.rotation);
+                            Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
+                            Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
+                            tile = _tile[0];
                         }
-                        else if (tile == _tiles[0])
+                        else if (tile == _tile[0])
                         {
-                            setTile = Instantiate(_tiles[1], new Vector3(x, 0, z), _tiles[0].transform.rotation);
-                            tile = _tiles[1];
+                            setTile = Instantiate(_tile[1], new Vector3(x, 0, z), _tile[0].transform.rotation);
+                            Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
+                            Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
+                            tile = _tile[1];
                         }
                         //駒の初期配置
                         if (BoardInfo[count][i] == 6)
@@ -152,7 +160,6 @@ public class TestLoad : MonoBehaviour
                         {
                             Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
                             BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
-                            Debug.Log($"BoardInfo[{Mathf.Abs(z)}][{x}] の値は {BoardInfo[Mathf.Abs(z)][x]}");
                             _manager.Phase = GameManager.PlayerPhase.White;
                         }
                         BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;

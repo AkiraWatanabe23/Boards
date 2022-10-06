@@ -39,7 +39,7 @@ public class PieceManager : MonoBehaviour
                 break;
             case 4:
                 Debug.Log("Rook");
-                GameObject.Find("Movements").GetComponent<Rook>().Movement();
+                GameObject.Find("Board").GetComponent<Rook>().Movement();
                 break;
             case 5:
                 Debug.Log("Queen");

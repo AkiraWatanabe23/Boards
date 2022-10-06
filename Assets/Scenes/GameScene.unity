@@ -177,7 +177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 236079544}
-  - component: {fileID: 236079545}
   m_Layer: 0
   m_Name: Movements
   m_TagString: Untagged
@@ -200,18 +199,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &236079545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236079543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d06f86a3fa87c14d9ab1175b21c8377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &261316424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,6 +840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1549933710}
   - component: {fileID: 1549933711}
+  - component: {fileID: 1549933712}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -900,9 +888,23 @@ MonoBehaviour:
   - {fileID: 1000013351177638, guid: 411f5295934dd1c4eb5916e3c649f0a7, type: 3}
   - {fileID: 1000011492277074, guid: 99331e88befbef94bbad253e659776ba, type: 3}
   - {fileID: 1000013427829390, guid: 1700328aaf96fd243a71d862897619a4, type: 3}
-  _tiles:
+  _tile:
   - {fileID: 5433014624392177406, guid: e0c78926c88d8414e8b51442777ab434, type: 3}
   - {fileID: 1233060307571799759, guid: 7207a82e14d41f540967382c386a80b5, type: 3}
+  _movableTile: {fileID: 5850444615202472185, guid: aaf22f1474c6ace458c4b00795d55371, type: 3}
+--- !u!114 &1549933712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549933709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d06f86a3fa87c14d9ab1175b21c8377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movable: {fileID: 2100000, guid: 5e2630107c162084f84ca57cea2fd539, type: 2}
 --- !u!1 &1816038841
 GameObject:
   m_ObjectHideFlags: 0

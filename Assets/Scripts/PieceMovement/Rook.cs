@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rook : MonoBehaviour
 {
+    [SerializeField] Material _movable;
     GameManager _manager;
     PieceManager _piece;
     TestLoad _board;
@@ -25,7 +27,16 @@ public class Rook : MonoBehaviour
             {
                 if (_board.BoardInfo[i-1][_piece.TileNumX] <= 0)
                 {
-                    Debug.Log("このマスには進めます White 前");
+                    if (_board.BoardInfo[i - 1][_piece.TileNumX] == 0)
+                    {
+                        _board.Tiles[i - 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                        Debug.Log($"このマスには進めます White 前 _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                    }
+                    else if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
+                    {
+                        Debug.Log($"この駒獲れます White 前 _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                        break;
+                    }
                 }
                 else
                     break;
@@ -34,7 +45,16 @@ public class Rook : MonoBehaviour
             {
                 if (_board.BoardInfo[i-1][_piece.TileNumX] >= 0)
                 {
-                    Debug.Log("このマスには進めます Black 後ろ");
+                    if (_board.BoardInfo[i-1][_piece.TileNumX] == 0)
+                    {
+                        _board.Tiles[i - 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                        Debug.Log($"このマスには進めます Black 後ろ _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                    }
+                    else if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
+                    {
+                        Debug.Log($"この駒獲れます Black 後ろ _board.BoardInfo[{i - 1}][{_piece.TileNumX}]");
+                        break;
+                    }
                 }
                 else
                     break;
