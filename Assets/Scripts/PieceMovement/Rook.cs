@@ -25,8 +25,10 @@ public class Rook : MonoBehaviour
         //前後方向
         for (int i = _piece.TileNumZ; i > 0; i--)
         {
+            //どっちのターンか
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
+                //探索先のマスが進めるマスか(空いているマス or 敵駒)
                 if (_board.BoardInfo[i-1][_piece.TileNumX] <= 0)
                 {
                     if (_board.BoardInfo[i-1][_piece.TileNumX] == 0)

@@ -20,9 +20,9 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
         var go = eventData.pointerCurrentRaycast.gameObject;
 
         //駒の選択
-        //現在...駒が選ばれていない and 選択状態の駒と新しく選んだ駒が異なる
-        //更新...選択状態の駒と新しく選んだ駒が異なる
-        if (_piece.PieceNum == 0 && selectPiece != go)
+        //現在...駒が選ばれていない or 選択状態の駒と新しく選んだ駒が異なる
+        //※駒を選べる条件...駒が選ばれていない or 自分のターンに自分の駒を選ぶこと
+        if (_piece.PieceNum == 0 || selectPiece != go)
         {
             //選んだ駒と選択状態の駒をそろえる
             selectPiece = go;
@@ -30,11 +30,20 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
             if (gameObject.CompareTag("WhitePiece") && _manager.Phase == GameManager.PlayerPhase.White ||
                 gameObject.CompareTag("BlackPiece") && _manager.Phase == GameManager.PlayerPhase.Black)
             {
-                _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
-                _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
-                _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                _piece.PieceMovement();
-                Debug.Log(go);
+                if (_piece.PieceNum == 0)
+                {
+                    _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
+                    _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
+                    _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
+                    _piece.PieceMovement();
+                    Debug.Log($"{go} を選びました");
+                }
+                else if (_piece.PieceNum != 0)
+                {
+                    _piece.ChangedPieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
+                    _piece.PieceSelect();
+                    Debug.Log("選ぶ駒をに切り替えます");
+                }
             }
             //相手のターンだった or 自ターンに相手の駒を選んだ
             else

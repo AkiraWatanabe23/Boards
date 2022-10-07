@@ -12,6 +12,7 @@ public class PieceManager : MonoBehaviour
     public int TileNumX { get; set; }
     public int TileNumZ { get; set; }
     public bool[,] Movable { get => _movable; set => _movable = value; }
+    public int ChangedPieceNum { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +53,7 @@ public class PieceManager : MonoBehaviour
     public void PieceSelect()
     {
         //すでに駒が選ばれていた場合...他の駒をクリックで選択対象を切り替える
+        //選択されている駒の探索を終了(切断)し、新しく選ばれた駒の探索に切り替える
+        PieceMovement();
     }
 }
