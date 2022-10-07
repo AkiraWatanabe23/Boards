@@ -13,6 +13,8 @@ public class PieceManager : MonoBehaviour
     public int TileNumZ { get; set; }
     public bool[,] Movable { get => _movable; set => _movable = value; }
     public int ChangedPieceNum { get; set; }
+    /// <summary> ‘I‘ð‚³‚ê‚½‹î </summary>
+    public GameObject SelectedPiece { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,7 @@ public class PieceManager : MonoBehaviour
                 break;
             case 3:
                 Debug.Log("Bishop");
+                GameObject.Find("Board").GetComponent<Bishop>().Movement();
                 break;
             case 4:
                 Debug.Log("Rook");

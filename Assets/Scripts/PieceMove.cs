@@ -24,12 +24,11 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
         //※駒を選べる条件...駒が選ばれていない or 自分のターンに自分の駒を選ぶこと
         if (_piece.PieceNum == 0 || selectPiece != go)
         {
-            //選んだ駒と選択状態の駒をそろえる
-            selectPiece = go;
             //自分のターンに自分の駒を選んだか判定
             if (gameObject.CompareTag("WhitePiece") && _manager.Phase == GameManager.PlayerPhase.White ||
                 gameObject.CompareTag("BlackPiece") && _manager.Phase == GameManager.PlayerPhase.Black)
             {
+                //駒が選ばれていなかった場合
                 if (_piece.PieceNum == 0)
                 {
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
@@ -38,6 +37,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                     _piece.PieceMovement();
                     Debug.Log($"{go} を選びました");
                 }
+                //駒の選択を切り替える場合
                 else if (_piece.PieceNum != 0)
                 {
                     _piece.ChangedPieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
