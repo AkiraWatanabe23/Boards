@@ -32,6 +32,7 @@ public class PieceManager : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("Knight");
+                GameObject.Find("Board").GetComponent<Knight>().Movement();
                 break;
             case 3:
                 Debug.Log("Bishop");
