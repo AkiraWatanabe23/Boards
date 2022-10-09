@@ -47,23 +47,24 @@ public class Knight : MonoBehaviour
         //前後
         for (int i = 0; i < ZnumVer.Length; i++) 
         {
-            if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] == 0) 
+            if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
             {
-                _board.Tiles[z - ZnumVer[i], x - XnumVer[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _board.Tiles[z + ZnumVer[i], x + XnumVer[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
             }
         } 
         //左右
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] == 0)
+            if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
             {
-                _board.Tiles[z - ZnumHor[i], x - XnumHor[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _board.Tiles[z + ZnumHor[i], x + XnumHor[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
             }
         }
     }
 
     void WhiteTurn()
     {
+        RaycastHit hit;
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
@@ -73,8 +74,30 @@ public class Knight : MonoBehaviour
             if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] < 0)
             {
                 //敵駒
+                //そのマスにRay飛ばして駒の色変える?
+                if (Physics.Raycast(new Vector3(x - XnumVer[i], 5f, -(z - ZnumVer[i])), Vector3.down, out hit, 20))
+                {
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
+                }
             }
             else if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] > 0)
+            {
+                //味方駒
+            }
+        }
+        //左右
+        for (int i = 0; i < ZnumHor.Length; i++)
+        {
+            if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] < 0)
+            {
+                //敵駒
+                //そのマスにRay飛ばして駒の色変える?
+                if (Physics.Raycast(new Vector3(x - XnumHor[i], 5f, -(z - ZnumHor[i])), Vector3.down, out hit, 20))
+                {
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
+                }
+            }
+            else if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] > 0)
             {
                 //味方駒
             }
@@ -83,14 +106,36 @@ public class Knight : MonoBehaviour
 
     void BlackTurn()
     {
+        RaycastHit hit;
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
+        for (int i = 0; i < ZnumVer.Length; i++)
+        {
+            if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] > 0)
+            {
+                //敵駒
+                //そのマスにRay飛ばして駒の色変える?
+                if (Physics.Raycast(new Vector3(x - XnumVer[i], 5f, -(z - ZnumVer[i])), Vector3.down, out hit, 20))
+                {
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
+                }
+            }
+            else if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] < 0)
+            {
+                //味方駒
+            }
+        }
         for (int i = 0; i < ZnumHor.Length; i++)
         {
             if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] > 0)
             {
                 //敵駒
+                //そのマスにRay飛ばして駒の色変える?
+                if (Physics.Raycast(new Vector3(x - XnumHor[i], 5f, -(z - ZnumHor[i])), Vector3.down, out hit, 20))
+                {
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
+                }
             }
             else if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] < 0)
             {
