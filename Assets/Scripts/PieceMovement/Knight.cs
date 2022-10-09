@@ -5,11 +5,14 @@ using UnityEngine;
 public class Knight : MonoBehaviour
 {
     [SerializeField] Material _movable;
+    [SerializeField] Material _getable;
     GameManager _manager;
     PieceManager _piece;
     TestLoad _board;
+    //前後方向のマスからの移動差
     int[] ZnumVer = new int[] { -2, -2, 2, 2 };
     int[] XnumVer = new int[] { -1, 1, -1, 1 };
+    //左右方向のマスからの移動差
     int[] ZnumHor = new int[] { -1, -1, 1, 1 };
     int[] XnumHor = new int[] { -2, 2, -2, 2 };
 

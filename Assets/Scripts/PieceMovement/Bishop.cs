@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bishop : MonoBehaviour
 {
     [SerializeField] Material _movable;
+    [SerializeField] Material _getable;
     GameManager _manager;
     PieceManager _piece;
     TestLoad _board;

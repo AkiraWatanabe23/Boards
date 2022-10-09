@@ -11,6 +11,7 @@ public class PieceManager : MonoBehaviour
     //選択した駒のマス番号を取得する(X,Z)
     public int TileNumX { get; set; }
     public int TileNumZ { get; set; }
+    //マスの移動可、不可を判断するのに使う予定(trueなら動ける,獲れる、falseなら出来ないのようなイメージ)
     public bool[,] Movable { get => _movable; set => _movable = value; }
     public int ChangedPieceNum { get; set; }
     /// <summary> 選択された駒 </summary>
@@ -32,15 +33,15 @@ public class PieceManager : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("Knight");
-                GameObject.Find("Board").GetComponent<Knight>().Movement();
+                GetComponent<Knight>().Movement();
                 break;
             case 3:
                 Debug.Log("Bishop");
-                GameObject.Find("Board").GetComponent<Bishop>().Movement();
+                GetComponent<Bishop>().Movement();
                 break;
             case 4:
                 Debug.Log("Rook");
-                GameObject.Find("Board").GetComponent<Rook>().Movement();
+                GetComponent<Rook>().Movement();
                 break;
             case 5:
                 Debug.Log("Queen");
