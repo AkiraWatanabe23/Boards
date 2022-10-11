@@ -40,9 +40,9 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 //駒の選択を切り替える場合
                 else if (_piece.PieceNum != 0)
                 {
-                    _piece.ChangedPieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
+                    _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.PieceSelect();
-                    Debug.Log("選ぶ駒をに切り替えます");
+                    Debug.Log("選ぶ駒を切り替えます");
                 }
             }
             //相手のターンだった or 自ターンに相手の駒を選んだ
