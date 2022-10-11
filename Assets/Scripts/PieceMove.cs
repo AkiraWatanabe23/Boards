@@ -50,6 +50,8 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                     _isCurrentMovable = true;
                     _piece.SelectPiece = gameObject;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
+                    _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
+                    _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
                     if (_isCurrentMovable == true)
                         _piece.PieceSelect();
                     Debug.Log("ëIÇ‘ãÓÇêÿÇËë÷Ç¶Ç‹Ç∑");
