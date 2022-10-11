@@ -12,9 +12,8 @@ public class PieceManager : MonoBehaviour
     public int TileNumX { get; set; }
     public int TileNumZ { get; set; }
     //マスの移動可、不可を判断するのに使う予定(trueなら動ける,獲れる、falseなら出来ないのようなイメージ)
-    public bool[,] Movable { get => _movable; set => _movable = value; }
-    /// <summary> 選択された駒 </summary>
-    public GameObject SelectedPiece { get; set; }
+    //public bool[,] Movable { get => _movable; set => _movable = value; }
+    public GameObject SelectPiece { get; set; }
 
     // Start is called before the first frame update
     void Start()

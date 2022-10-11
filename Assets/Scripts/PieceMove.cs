@@ -9,6 +9,8 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     PieceManager _piece;
     GameManager _manager;
     public PieceType Type { get => _type; set => _type = value; }
+    //駒の切り替えに使う(true,falseで現在選ばれているかを判定)...駒毎につけるべき?
+    [SerializeField] bool _isCurrentMovable;
 
     /// <summary>
     /// 駒の選択処理(非選択もつける)
@@ -16,13 +18,12 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameObject selectPiece = null;
         var go = eventData.pointerCurrentRaycast.gameObject;
 
         //駒の選択
         //現在...駒が選ばれていない or 選択状態の駒と新しく選んだ駒が異なる
         //※駒を選べる条件...駒が選ばれていない or 自分のターンに自分の駒を選ぶこと
-        if (_piece.PieceNum == 0 || selectPiece != go)
+        if (_piece.PieceNum == 0 || _piece.SelectPiece != go)
         {
             //自分のターンに自分の駒を選んだか判定
             if (gameObject.CompareTag("WhitePiece") && _manager.Phase == GameManager.PlayerPhase.White ||
@@ -31,17 +32,26 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 //駒が選ばれていなかった場合
                 if (_piece.PieceNum == 0)
                 {
+                    _isCurrentMovable = true;
+                    _piece.SelectPiece = gameObject;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                     _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                    _piece.PieceMovement();
+                    if (_isCurrentMovable == true)
+                    {
+                        _piece.PieceMovement();
+                    }
                     Debug.Log($"{go} を選びました");
                 }
                 //駒の選択を切り替える場合
                 else if (_piece.PieceNum != 0)
                 {
+                    _piece.SelectPiece.GetComponent<PieceMove>()._isCurrentMovable = false;
+                    _isCurrentMovable = true;
+                    _piece.SelectPiece = gameObject;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
-                    _piece.PieceSelect();
+                    if (_isCurrentMovable == true)
+                        _piece.PieceSelect();
                     Debug.Log("選ぶ駒を切り替えます");
                 }
             }
@@ -62,12 +72,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     {
         _piece = GetComponentInParent<PieceManager>();
         _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _isCurrentMovable = false;
     }
 
     public enum PieceType
