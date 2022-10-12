@@ -21,6 +21,27 @@ public class Rook : MonoBehaviour
         _board = GameObject.Find("Board").GetComponent<TestLoad>();
     }
 
+    /// <summary>
+    /// 探索範囲の描画
+    /// </summary>
+    void Update()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (_piece.Movable[i, j] == true)
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
+        }
+    }
+
     /// <summary> 
     /// 前後左右の探索
     /// (やっていることは全方向で同じだけど、いる位置によって探索範囲が異なるため、各方向で探索を分ける)
@@ -33,7 +54,7 @@ public class Rook : MonoBehaviour
             //マスが空いていたら動ける
             if (_board.BoardInfo[i - 1][_piece.TileNumX] == 0)
             {
-                _board.Tiles[i - 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i - 1, _piece.TileNumX] = true;
             }
 
             //どっちのターンか
@@ -69,7 +90,7 @@ public class Rook : MonoBehaviour
         {
             if (_board.BoardInfo[i + 1][_piece.TileNumX] == 0)
             {
-                _board.Tiles[i + 1, _piece.TileNumX].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i + 1, _piece.TileNumX] = true;
             }
 
             if (_manager.Phase == GameManager.PlayerPhase.White)
@@ -97,7 +118,7 @@ public class Rook : MonoBehaviour
         {
             if (_board.BoardInfo[_piece.TileNumZ][i + 1] == 0)
             {
-                _board.Tiles[_piece.TileNumZ, i + 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[_piece.TileNumZ, i + 1] = true;
             }
 
             if (_manager.Phase == GameManager.PlayerPhase.White)
@@ -124,7 +145,7 @@ public class Rook : MonoBehaviour
         {
             if (_board.BoardInfo[_piece.TileNumZ][i - 1] == 0)
             {
-                _board.Tiles[_piece.TileNumZ, i - 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[_piece.TileNumZ, i - 1] = true;
             }
 
             if (_manager.Phase == GameManager.PlayerPhase.White)

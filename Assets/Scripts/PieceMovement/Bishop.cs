@@ -18,6 +18,27 @@ public class Bishop : MonoBehaviour
         _board = GameObject.Find("Board").GetComponent<TestLoad>();
     }
 
+    /// <summary>
+    /// íTçıîÕàÕÇÃï`âÊ
+    /// </summary>
+    void Update()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (_piece.Movable[i, j] == true)
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
+        }
+    }
+
     public void Movement()
     {
         //ëOï˚å¸
@@ -28,7 +49,7 @@ public class Bishop : MonoBehaviour
             //ç∂ëO
             if (_board.BoardInfo[i - 1][j - 1] == 0)
             {
-                _board.Tiles[i - 1, j - 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i - 1, j - 1] = true;
                 if (j == 1) //IndexOutOfRange ñhé~
                     break;
             }
@@ -67,7 +88,7 @@ public class Bishop : MonoBehaviour
             //âEëO
             if (_board.BoardInfo[i - 1][k + 1] == 0)
             {
-                _board.Tiles[i - 1, k + 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i - 1, k + 1] = true;
                 if (k == 6)
                     break;
             }
@@ -110,7 +131,7 @@ public class Bishop : MonoBehaviour
             //ç∂å„ÇÎ
             if (_board.BoardInfo[i + 1][j - 1] == 0)
             {
-                _board.Tiles[i + 1, j - 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i + 1, j - 1] = true;
                 if (j == 1)
                     break;
             }
@@ -149,7 +170,7 @@ public class Bishop : MonoBehaviour
             //âEå„ÇÎ
             if (_board.BoardInfo[i + 1][k + 1] == 0)
             {
-                _board.Tiles[i + 1, k + 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[i + 1, k + 1] = true;
                 if (k == 6)
                     break;
             }

@@ -12,7 +12,7 @@ public class PieceManager : MonoBehaviour
     public int TileNumX { get; set; }
     public int TileNumZ { get; set; }
     //マスの移動可、不可を判断するのに使う予定(trueなら動ける,獲れる、falseなら出来ないのようなイメージ)
-    //public bool[,] Movable { get => _movable; set => _movable = value; }
+    public bool[,] Movable { get => _movable; set => _movable = value; }
     public GameObject SelectPiece { get; set; }
 
     // Start is called before the first frame update
@@ -24,6 +24,10 @@ public class PieceManager : MonoBehaviour
     //駒の個別移動処理への遷移
     public void PieceMovement()
     {
+        //ここで、一旦全ての駒の探索をリセットする処理を書く(?)
+        //↑それぞれのMovement()に書くと、駒を変えた時に呼ばれないため
+        SearchReset();
+
         switch (Mathf.Abs(PieceNum))
         {
             case 1:
@@ -46,17 +50,20 @@ public class PieceManager : MonoBehaviour
                 break;
             case 6:
                 Debug.Log("King");
+                GetComponent<King>().Movement();
                 break;
         }
     }
 
-    /// <summary>
-    /// 駒の選択、非選択に関する処理
-    /// </summary>
-    public void PieceSelect()
+    /// <summary> 駒の切り替え時に探索を切る </summary>
+    void SearchReset()
     {
-        //すでに駒が選ばれていた場合...他の駒をクリックで選択対象を切り替える
-        //選択されている駒の探索を終了(切断)し、新しく選ばれた駒の探索に切り替える
-        PieceMovement();
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                Movable[i, j] = false;
+            }
+        }
     }
 }

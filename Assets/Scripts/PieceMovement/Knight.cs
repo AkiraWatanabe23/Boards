@@ -24,6 +24,27 @@ public class Knight : MonoBehaviour
         _board = GameObject.Find("Board").GetComponent<TestLoad>();
     }
 
+    /// <summary>
+    /// íTçıîÕàÕÇÃï`âÊ
+    /// </summary>
+    void Update()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (_piece.Movable[i, j] == true)
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
+        }
+    }
+
     public void Movement()
     {
         MovableTile();
@@ -49,7 +70,7 @@ public class Knight : MonoBehaviour
         {
             if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
             {
-                _board.Tiles[z + ZnumVer[i], x + XnumVer[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
             }
         } 
         //ç∂âE
@@ -57,7 +78,7 @@ public class Knight : MonoBehaviour
         {
             if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
             {
-                _board.Tiles[z + ZnumHor[i], x + XnumHor[i]].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
             }
         }
     }

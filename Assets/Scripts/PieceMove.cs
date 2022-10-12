@@ -9,8 +9,6 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     PieceManager _piece;
     GameManager _manager;
     public PieceType Type { get => _type; set => _type = value; }
-    //駒の切り替えに使う(true,falseで現在選ばれているかを判定)...駒毎につけるべき?
-    [SerializeField] bool _isCurrentMovable;
 
     /// <summary>
     /// 駒の選択処理(非選択もつける)
@@ -32,28 +30,21 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 //駒が選ばれていなかった場合
                 if (_piece.PieceNum == 0)
                 {
-                    _isCurrentMovable = true;
                     _piece.SelectPiece = gameObject;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                     _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                    if (_isCurrentMovable == true)
-                    {
-                        _piece.PieceMovement();
-                    }
+                    _piece.PieceMovement();
                     Debug.Log($"{go} を選びました");
                 }
                 //駒の選択を切り替える場合
                 else if (_piece.PieceNum != 0)
                 {
-                    _piece.SelectPiece.GetComponent<PieceMove>()._isCurrentMovable = false;
-                    _isCurrentMovable = true;
                     _piece.SelectPiece = gameObject;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                     _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                    if (_isCurrentMovable == true)
-                        _piece.PieceSelect();
+                    _piece.PieceMovement();
                     Debug.Log("選ぶ駒を切り替えます");
                 }
             }
@@ -74,7 +65,6 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     {
         _piece = GetComponentInParent<PieceManager>();
         _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _isCurrentMovable = false;
     }
 
     public enum PieceType
