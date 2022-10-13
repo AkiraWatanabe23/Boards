@@ -148,10 +148,8 @@ public class King : MonoBehaviour
 
     void GetableRay(int x, int z)
     {
-        RaycastHit hit;
-
         //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
-        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
         {
             hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }

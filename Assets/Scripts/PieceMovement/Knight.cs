@@ -48,7 +48,6 @@ public class Knight : MonoBehaviour
     public void Movement()
     {
         MovableTile();
-        //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
         if (_manager.Phase == GameManager.PlayerPhase.White)
         {
             WhiteTurn();
@@ -65,42 +64,26 @@ public class Knight : MonoBehaviour
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
-        //‘OŒã
         for (int i = 0; i < ZnumVer.Length; i++) 
         {
             if (i <= 1 && z >= 2) //‘O(IndexOutofRange–h~)
             {
-                if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
-                {
-                    _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
-                }
+                GetableCheck(x + XnumVer[i], z + ZnumVer[i], 0);
             }
             else if (i > 1 && z <= 5) //Œã‚ë
             {
-                if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
-                {
-                    _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
-                }
+                GetableCheck(x + XnumVer[i], z + ZnumVer[i], 0);
             }
         } 
-        //¶‰E
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            //¶
-            if (i <= 1 && x >= 2)
+            if (i <= 1 && x >= 2) //¶
             {
-                if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
-                {
-                    _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
-                }
+                GetableCheck(x + XnumHor[i], z + ZnumHor[i], 0);
             }
-            //‰E
-            else if (i > 1 && x <= 5)
+            else if (i > 1 && x <= 5) //‰E
             {
-                if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
-                {
-                    _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
-                }
+                GetableCheck(x + XnumHor[i], z + ZnumHor[i], 0);
             }
         }
     }
@@ -110,20 +93,26 @@ public class Knight : MonoBehaviour
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
-        //‹î‚ª‚ ‚ê‚Î’TõI—¹
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] < 0)
+            if (i <= 1 && z >= 2) //‘O
             {
-                GetableRay(x - XnumVer[i], z - ZnumVer[i]); //“G‹î(Šl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é)
+                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 1);
+            }
+            else if (i > 1 && z <= 5) //Œã‚ë
+            {
+                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 1);
             }
         }
-        //¶‰E
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] < 0)
+            if (i <= 1 && x >= 2)
             {
-                GetableRay(x - XnumHor[i], z - ZnumHor[i]);
+                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 1);
+            }
+            else if (i > 1 && x <= 5)
+            {
+                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 1);
             }
         }
     }
@@ -135,26 +124,57 @@ public class Knight : MonoBehaviour
 
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] > 0)
+            if (i <= 1 && z >= 2)
             {
-                GetableRay(x - XnumVer[i], z - ZnumVer[i]);
+                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 2);
+            }
+            else if (i > 1 && z <= 5)
+            {
+                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 2);
             }
         }
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] > 0)
+            if (i <= 1 && x >= 2)
             {
-                GetableRay(x - XnumHor[i], z - ZnumHor[i]);
+                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 2);
+            }
+            else if (i > 1 && x <= 5)
+            {
+                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 2);
+            }
+        }
+    }
+
+    void GetableCheck(int x, int z, int phase)
+    {
+        if (phase == 0) //ƒ}ƒX‚Ì’Tõ
+        {
+            if (_board.BoardInfo[z][x] == 0)
+            {
+                _piece.Movable[z, x] = true;
+            }
+        }
+        else if (phase == 1) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(”’)
+        {
+            if (_board.BoardInfo[z][x] < 0)
+            {
+                GetableRay(x, z);
+            }
+        }
+        else if (phase == 2) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(•)
+        {
+            if (_board.BoardInfo[z][x] > 0)
+            {
+                GetableRay(x, z);
             }
         }
     }
 
     void GetableRay(int x, int z)
     {
-        RaycastHit hit;
-
         //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
-        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
         {
             hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
