@@ -85,7 +85,6 @@ public class Knight : MonoBehaviour
 
     void WhiteTurn()
     {
-        RaycastHit hit;
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
@@ -94,16 +93,7 @@ public class Knight : MonoBehaviour
         {
             if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] < 0)
             {
-                //敵駒
-                //そのマスにRay飛ばして駒の色変える?
-                if (Physics.Raycast(new Vector3(x - XnumVer[i], 5f, -(z - ZnumVer[i])), Vector3.down, out hit, 20))
-                {
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
-                }
-            }
-            else if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] > 0)
-            {
-                //味方駒
+                GetableRay(x - XnumVer[i], z - ZnumVer[i]); //敵駒(獲れる状態に切り替える)
             }
         }
         //左右
@@ -111,23 +101,13 @@ public class Knight : MonoBehaviour
         {
             if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] < 0)
             {
-                //敵駒
-                //そのマスにRay飛ばして駒の色変える?
-                if (Physics.Raycast(new Vector3(x - XnumHor[i], 5f, -(z - ZnumHor[i])), Vector3.down, out hit, 20))
-                {
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
-                }
-            }
-            else if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] > 0)
-            {
-                //味方駒
+                GetableRay(x - XnumHor[i], z - ZnumHor[i]);
             }
         }
     }
 
     void BlackTurn()
     {
-        RaycastHit hit;
         int x = _piece.TileNumX;
         int z = _piece.TileNumZ;
 
@@ -135,33 +115,26 @@ public class Knight : MonoBehaviour
         {
             if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] > 0)
             {
-                //敵駒
-                //そのマスにRay飛ばして駒の色変える?
-                if (Physics.Raycast(new Vector3(x - XnumVer[i], 5f, -(z - ZnumVer[i])), Vector3.down, out hit, 20))
-                {
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
-                }
-            }
-            else if (_board.BoardInfo[z - ZnumVer[i]][x - XnumVer[i]] < 0)
-            {
-                //味方駒
+                GetableRay(x - XnumVer[i], z - ZnumVer[i]);
             }
         }
         for (int i = 0; i < ZnumHor.Length; i++)
         {
             if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] > 0)
             {
-                //敵駒
-                //そのマスにRay飛ばして駒の色変える?
-                if (Physics.Raycast(new Vector3(x - XnumHor[i], 5f, -(z - ZnumHor[i])), Vector3.down, out hit, 20))
-                {
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
-                }
+                GetableRay(x - XnumHor[i], z - ZnumHor[i]);
             }
-            else if (_board.BoardInfo[z - ZnumHor[i]][x - XnumHor[i]] < 0)
-            {
-                //味方駒
-            }
+        }
+    }
+
+    void GetableRay(int x, int z)
+    {
+        RaycastHit hit;
+
+        //その駒を獲れる状態に切り替える
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        {
+            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }

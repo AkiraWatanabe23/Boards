@@ -57,18 +57,16 @@ public class King : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //“G‹î
                 if (_board.BoardInfo[_piece.TileNumZ + ZnumVer[i]][_piece.TileNumX] < 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                    GetableRay(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i]); //“G‹î(Šl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é)
                 }
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //“G‹î
                 if (_board.BoardInfo[_piece.TileNumZ + ZnumVer[i]][_piece.TileNumX] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                    GetableRay(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i]);
                 }
             }
         }
@@ -83,18 +81,16 @@ public class King : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //“G‹î
                 if (_board.BoardInfo[_piece.TileNumZ][_piece.TileNumX + XnumVer[i]] < 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                    GetableRay(_piece.TileNumX + XnumVer[i], _piece.TileNumZ);
                 }
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //“G‹î
                 if (_board.BoardInfo[_piece.TileNumZ][_piece.TileNumX + XnumVer[i]] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                    GetableRay(_piece.TileNumX + XnumVer[i], _piece.TileNumZ);
                 }
             }
         }
@@ -111,18 +107,16 @@ public class King : MonoBehaviour
                 //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
                 if (_manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    //“G‹î
                     if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[0]][_piece.TileNumX + XnumHor[i]] < 0)
                     {
-                        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0]);
                     }
                 }
                 else if (_manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    //“G‹î
                     if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[0]][_piece.TileNumX + XnumHor[i]] > 0)
                     {
-                        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0]);
                     }
                 }
             }
@@ -136,21 +130,30 @@ public class King : MonoBehaviour
                 //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
                 if (_manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    //“G‹î
                     if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[1]][_piece.TileNumX + XnumHor[i]] < 0)
                     {
-                        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1]);
                     }
                 }
                 else if (_manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    //“G‹î
                     if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[1]][_piece.TileNumX + XnumHor[i]] > 0)
                     {
-                        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1]);
                     }
                 }
             }
+        }
+    }
+
+    void GetableRay(int x, int z)
+    {
+        RaycastHit hit;
+
+        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        {
+            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }

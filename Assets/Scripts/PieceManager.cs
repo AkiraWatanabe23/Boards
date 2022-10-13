@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
+    [SerializeField] Material _white;
+    [SerializeField] Material _black;
     [SerializeField] Material _select;
     [SerializeField] GameObject _selectPiece;
     bool[,] _movable = new bool[8, 8];
-    //駒を選んだ時に色を変える
+    public Material White { get => _white; set => _white = value; }
+    public Material Black { get => _black; set => _black = value; }
+    /// <summary> 駒を選んだ時に色を変える </summary>
     public Material Select { get => _select; set => _select = value; }
-    //現在選ばれている駒
+    /// <summary> 現在選ばれている駒 </summary>
     public GameObject SelectPiece { get => _selectPiece; set => _selectPiece = value; }
-    //駒に割り振った番号(個別探索処理に使う)
+    /// <summary> 駒に割り振った番号(個別探索処理に使う) </summary>
     public int PieceNum { get; set; }
     //選択した駒のマス番号を取得する(X,Z)
     public int TileNumX { get; set; }
     public int TileNumZ { get; set; }
-    //マスの移動可、不可を判断するのに使う予定(trueなら動ける,獲れる、falseなら出来ないのようなイメージ)
+    /// <summary> マスの移動可、不可を判断するのに使う予定
+    /// (trueなら動ける,獲れる、falseなら出来ないのようなイメージ) </summary>
     public bool[,] Movable { get => _movable; set => _movable = value; }
 
     // Start is called before the first frame update

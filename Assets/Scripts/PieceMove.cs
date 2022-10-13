@@ -31,6 +31,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 if (_piece.PieceNum == 0)
                 {
                     _piece.SelectPiece = gameObject;
+                    _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Select;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                     _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
@@ -40,7 +41,18 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 //駒の選択を切り替える場合
                 else if (_piece.PieceNum != 0)
                 {
+                    if (_piece.SelectPiece.CompareTag("WhitePiece"))
+                    {
+                        //駒を切り替えた時に選んでいない状態に戻す処理(現在は色を戻すだけ)
+                        _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.White;
+                    }
+                    else if (_piece.SelectPiece.CompareTag("BlackPiece"))
+                    {
+                        //駒を切り替えた時に選んでいない状態に戻す処理
+                        _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Black;
+                    }
                     _piece.SelectPiece = gameObject;
+                    _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Select;
                     _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
                     _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
                     _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);

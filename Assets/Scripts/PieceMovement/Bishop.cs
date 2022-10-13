@@ -57,28 +57,22 @@ public class Bishop : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
-                if (_board.BoardInfo[i - 1][j - 1] < 0)
+                if (_board.BoardInfo[i - 1][j - 1] < 0) //“G‹î(Šl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚Ä‚©‚ç’TõI—¹)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(j - 1, i - 1);
                     break;
                 }
-                //–¡•û‹î(‚»‚Ì“_‚Å’TõI—¹)
-                else if (_board.BoardInfo[i - 1][j - 1] > 0)
+                else //–¡•û‹î(‰½‚à‚¹‚¸‚É’TõI—¹)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i - 1][j - 1] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(j - 1, i - 1);
                     break;
                 }
-                //–¡•û‹î
-                else if (_board.BoardInfo[i - 1][j - 1] < 0)
+                else
                     break;
             }
             j--;
@@ -96,28 +90,22 @@ public class Bishop : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i - 1][k + 1] < 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(k + 1, i - 1);
                     break;
                 }
-                //–¡•û‹î(‚»‚Ì“_‚Å’TõI—¹)
-                else if (_board.BoardInfo[i - 1][k + 1] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i - 1][k + 1] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(k + 1, i - 1);
                     break;
                 }
-                //–¡•û‹î
-                else if (_board.BoardInfo[i - 1][k + 1] < 0)
+                else
                     break;
             }
             k++;
@@ -139,28 +127,22 @@ public class Bishop : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i + 1][j - 1] < 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(j - 1, i + 1);
                     break;
                 }
-                //–¡•û‹î(‚»‚Ì“_‚Å’TõI—¹)
-                else if (_board.BoardInfo[i + 1][j - 1] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i + 1][j - 1] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(j - 1, i + 1);
                     break;
                 }
-                //–¡•û‹î
-                else if (_board.BoardInfo[i + 1][j - 1] < 0)
+                else
                     break;
             }
             j--;
@@ -178,31 +160,36 @@ public class Bishop : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i + 1][k + 1] < 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(k + 1, i + 1);
                     break;
                 }
-                //–¡•û‹î(‚»‚Ì“_‚Å’TõI—¹)
-                else if (_board.BoardInfo[i + 1][k + 1] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
                 if (_board.BoardInfo[i + 1][k + 1] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(k + 1, i + 1);
                     break;
                 }
-                //–¡•û‹î
-                else if (_board.BoardInfo[i + 1][k + 1] < 0)
+                else
                     break;
             }
             k++;
+        }
+    }
+
+    void GetableRay(int x, int z)
+    {
+        RaycastHit hit;
+
+        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        {
+            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }

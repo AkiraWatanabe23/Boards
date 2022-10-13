@@ -60,28 +60,23 @@ public class Rook : MonoBehaviour
             //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
-                //“G‹î
-                if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
+                if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0) //“G‹î(Šl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚Ä‚©‚ç’TõI—¹)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(_piece.TileNumX, i - 1);
                     break;
                 }
-                //–¡•û‹î(‚»‚Ì“_‚Å’TõI—¹)
-                else if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
+                else //–¡•û‹î(‰½‚à‚¹‚¸‚É’TõI—¹)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
                 //“G‹î
                 if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
                 {
-                    //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚É‚µ‚Ä’TõI—¹
+                    GetableRay(_piece.TileNumX, i - 1);
                     break;
                 }
-                //–¡•û‹î
-                else if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
+                else
                     break;
             }
         }
@@ -95,21 +90,22 @@ public class Rook : MonoBehaviour
 
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                //‹î‚ª‚ ‚ê‚Î’TõI—¹
                 if (_board.BoardInfo[i + 1][_piece.TileNumX] < 0)
                 {
+                    GetableRay(_piece.TileNumX, i + 1);
                     break;
                 }
-                else if (_board.BoardInfo[i + 1][_piece.TileNumX] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
                 if (_board.BoardInfo[i + 1][_piece.TileNumX] > 0)
                 {
+                    GetableRay(_piece.TileNumX, i + 1);
                     break;
                 }
-                else if (_board.BoardInfo[i + 1][_piece.TileNumX] < 0)
+                else
                     break;
             }
         }
@@ -125,18 +121,20 @@ public class Rook : MonoBehaviour
             {
                 if (_board.BoardInfo[_piece.TileNumZ][i + 1] < 0)
                 {
+                    GetableRay(i + 1, _piece.TileNumZ);
                     break;
                 }
-                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
                 if (_board.BoardInfo[_piece.TileNumZ][i + 1] > 0)
                 {
+                    GetableRay(i + 1, _piece.TileNumZ);
                     break;
                 }
-                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] < 0)
+                else
                     break;
             }
         }
@@ -150,22 +148,35 @@ public class Rook : MonoBehaviour
 
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                if (_board.BoardInfo[_piece.TileNumZ][i-1] < 0)
+                if (_board.BoardInfo[_piece.TileNumZ][i - 1] < 0)
                 {
+                    GetableRay(i - 1, _piece.TileNumZ);
                     break;
                 }
-                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] > 0)
+                else
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                if (_board.BoardInfo[_piece.TileNumZ][i-1] > 0)
+                if (_board.BoardInfo[_piece.TileNumZ][i - 1] > 0)
                 {
+                    GetableRay(i - 1, _piece.TileNumZ);
                     break;
                 }
-                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] < 0)
+                else
                     break;
             }
+        }
+    }
+
+    void GetableRay(int x, int z)
+    {
+        RaycastHit hit;
+
+        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out hit, 20))
+        {
+            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }
