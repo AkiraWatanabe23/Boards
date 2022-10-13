@@ -34,7 +34,7 @@ public class PieceManager : MonoBehaviour
     public void PieceMovement()
     {
         SearchReset();
-        //ここで、一旦全ての駒の探索をリセットする処理を書く(?)
+        //ここで、一旦全ての駒の探索をリセットする処理を書く
         //↑それぞれのMovement()に書くと、駒を変えた時に呼ばれないため
 
         switch (Mathf.Abs(PieceNum))
@@ -64,7 +64,7 @@ public class PieceManager : MonoBehaviour
         }
     }
 
-    /// <summary> 駒の切り替え時に探索を切る </summary>
+    /// <summary> 駒の切り替え時にそれまで選んでいた駒の探索を切る </summary>
     void SearchReset()
     {
         for (int i = 0; i < 8; i++)

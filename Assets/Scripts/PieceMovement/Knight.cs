@@ -13,8 +13,8 @@ public class Knight : MonoBehaviour
     int[] ZnumVer = new int[] { -2, -2, 2, 2 };
     int[] XnumVer = new int[] { -1, 1, -1, 1 };
     //左右方向のマスからの移動差
-    int[] ZnumHor = new int[] { -1, -1, 1, 1 };
-    int[] XnumHor = new int[] { -2, 2, -2, 2 };
+    int[] ZnumHor = new int[] { -1, 1, -1, 1 };
+    int[] XnumHor = new int[] { -2, -2, 2, 2 };
 
     // Start is called before the first frame update
     void Start()
@@ -68,17 +68,39 @@ public class Knight : MonoBehaviour
         //前後
         for (int i = 0; i < ZnumVer.Length; i++) 
         {
-            if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
+            if (i <= 1 && z >= 2) //前(IndexOutofRange防止)
             {
-                _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
+                if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
+                {
+                    _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
+                }
+            }
+            else if (i > 1 && z <= 5) //後ろ
+            {
+                if (_board.BoardInfo[z + ZnumVer[i]][x + XnumVer[i]] == 0)
+                {
+                    _piece.Movable[z + ZnumVer[i], x + XnumVer[i]] = true;
+                }
             }
         } 
         //左右
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
+            //左
+            if (i <= 1 && x >= 2)
             {
-                _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
+                if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
+                {
+                    _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
+                }
+            }
+            //右
+            else if (i > 1 && x <= 5)
+            {
+                if (_board.BoardInfo[z + ZnumHor[i]][x + XnumHor[i]] == 0)
+                {
+                    _piece.Movable[z + ZnumHor[i], x + XnumHor[i]] = true;
+                }
             }
         }
     }
