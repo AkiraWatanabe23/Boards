@@ -66,22 +66,14 @@ public class Knight : MonoBehaviour
 
         for (int i = 0; i < ZnumVer.Length; i++) 
         {
-            if (i <= 1 && z >= 2) //‘O(IndexOutofRange–hŽ~)
-            {
-                GetableCheck(x + XnumVer[i], z + ZnumVer[i], 0);
-            }
-            else if (i > 1 && z <= 5) //Œã‚ë
+            if ((i <= 1 && z >= 2) || (i > 1 && z <= 5)) //‘OŒã(IndexOutofRange–hŽ~)
             {
                 GetableCheck(x + XnumVer[i], z + ZnumVer[i], 0);
             }
         } 
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (i <= 1 && x >= 2) //¶
-            {
-                GetableCheck(x + XnumHor[i], z + ZnumHor[i], 0);
-            }
-            else if (i > 1 && x <= 5) //‰E
+            if ((i <= 1 && x >= 2) || (i > 1 && x <= 5)) //¶‰E
             {
                 GetableCheck(x + XnumHor[i], z + ZnumHor[i], 0);
             }
@@ -95,22 +87,14 @@ public class Knight : MonoBehaviour
 
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if (i <= 1 && z >= 2) //‘O
-            {
-                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 1);
-            }
-            else if (i > 1 && z <= 5) //Œã‚ë
+            if ((i <= 1 && z >= 2) || (i > 1 && z <= 5)) //‘O
             {
                 GetableCheck(x - XnumVer[i], z - ZnumVer[i], 1);
             }
         }
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (i <= 1 && x >= 2)
-            {
-                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 1);
-            }
-            else if (i > 1 && x <= 5)
+            if ((i <= 1 && x >= 2) || (i > 1 && x <= 5))
             {
                 GetableCheck(x - XnumHor[i], z - ZnumHor[i], 1);
             }
@@ -124,22 +108,14 @@ public class Knight : MonoBehaviour
 
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if (i <= 1 && z >= 2)
-            {
-                GetableCheck(x - XnumVer[i], z - ZnumVer[i], 2);
-            }
-            else if (i > 1 && z <= 5)
+            if ((i <= 1 && z >= 2) || (i > 1 && z <= 5))
             {
                 GetableCheck(x - XnumVer[i], z - ZnumVer[i], 2);
             }
         }
         for (int i = 0; i < ZnumHor.Length; i++)
         {
-            if (i <= 1 && x >= 2)
-            {
-                GetableCheck(x - XnumHor[i], z - ZnumHor[i], 2);
-            }
-            else if (i > 1 && x <= 5)
+            if ((i <= 1 && x >= 2) || (i > 1 && x <= 5))
             {
                 GetableCheck(x - XnumHor[i], z - ZnumHor[i], 2);
             }
@@ -173,7 +149,7 @@ public class Knight : MonoBehaviour
 
     void GetableRay(int x, int z)
     {
-        //‚»‚Ì‹î‚ðŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+        //‚»‚Ì‹î‚ðŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é(Œ»Žž“_‚ÍF•Ï‚¦‚é‚¾‚¯)
         if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
         {
             hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;

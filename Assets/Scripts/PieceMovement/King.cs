@@ -49,99 +49,91 @@ public class King : MonoBehaviour
         //前後
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if (_board.BoardInfo[_piece.TileNumZ + ZnumVer[i]][_piece.TileNumX] == 0)
+            if ((i == 0 && _piece.TileNumZ != 0) || (i == 1 && _piece.TileNumZ != 7))
             {
-                _piece.Movable[_piece.TileNumZ + ZnumVer[i], _piece.TileNumX] = true;
-            }
+                GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 0);
 
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ + ZnumVer[i]][_piece.TileNumX] < 0)
+                //どっちのターンか
+                if (_manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    GetableRay(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i]); //敵駒(獲れる状態に切り替える)
+                    GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 1);
                 }
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ + ZnumVer[i]][_piece.TileNumX] > 0)
+                else if (_manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    GetableRay(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i]);
+                    GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 2);
                 }
             }
         }
         //左右
         for (int i = 0; i < XnumVer.Length; i++)
         {
-            if (_board.BoardInfo[_piece.TileNumZ][_piece.TileNumX + XnumVer[i]] == 0)
-            {
-                _piece.Movable[_piece.TileNumZ, _piece.TileNumX + XnumVer[i]] = true;
-            }
+            GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 0);
 
             //どっちのターンか
             if (_manager.Phase == GameManager.PlayerPhase.White)
             {
-                if (_board.BoardInfo[_piece.TileNumZ][_piece.TileNumX + XnumVer[i]] < 0)
-                {
-                    GetableRay(_piece.TileNumX + XnumVer[i], _piece.TileNumZ);
-                }
+                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 1);
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                if (_board.BoardInfo[_piece.TileNumZ][_piece.TileNumX + XnumVer[i]] > 0)
-                {
-                    GetableRay(_piece.TileNumX + XnumVer[i], _piece.TileNumZ);
-                }
+                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 2);
             }
         }
         //斜め
         for (int i = 0; i < XnumHor.Length; i++)
         {
-            if (i <= 1)
+            if (i <= 1) //前
             {
-                if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[0]][_piece.TileNumX + XnumHor[i]] == 0)
-                {
-                    _piece.Movable[_piece.TileNumZ + ZnumHor[0], _piece.TileNumX + XnumHor[i]] = true;
-                }
+                GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 0);
 
                 //どっちのターンか
                 if (_manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[0]][_piece.TileNumX + XnumHor[i]] < 0)
-                    {
-                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0]);
-                    }
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 1);
                 }
                 else if (_manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[0]][_piece.TileNumX + XnumHor[i]] > 0)
-                    {
-                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0]);
-                    }
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 2);
                 }
             }
-            else
+            else //後ろ
             {
-                if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[1]][_piece.TileNumX + XnumHor[i]] == 0)
-                {
-                    _piece.Movable[_piece.TileNumZ + ZnumHor[1], _piece.TileNumX + XnumHor[i]] = true;
-                }
+                GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 0);
 
                 //どっちのターンか
                 if (_manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[1]][_piece.TileNumX + XnumHor[i]] < 0)
-                    {
-                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1]);
-                    }
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 1);
                 }
                 else if (_manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    if (_board.BoardInfo[_piece.TileNumZ + ZnumHor[1]][_piece.TileNumX + XnumHor[i]] > 0)
-                    {
-                        GetableRay(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1]);
-                    }
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 2);
                 }
+            }
+        }
+    }
+
+    void GetableCheck(int x, int z, int phase)
+    {
+        if (phase == 0) //マスの探索
+        {
+            if (_board.BoardInfo[z][x] == 0)
+            {
+                _piece.Movable[z, x] = true;
+            }
+        }
+        else if (phase == 1) //獲れる駒があるか(白)
+        {
+            if (_board.BoardInfo[z][x] < 0)
+            {
+                GetableRay(x, z);
+            }
+        }
+        else if (phase == 2) //獲れる駒があるか(黒)
+        {
+            if (_board.BoardInfo[z][x] > 0)
+            {
+                GetableRay(x, z);
             }
         }
     }
