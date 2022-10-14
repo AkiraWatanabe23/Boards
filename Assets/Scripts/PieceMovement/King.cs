@@ -11,9 +11,9 @@ public class King : MonoBehaviour
     TestLoad _board;
     //前後左右方向のマスからの移動差
     int[] ZnumVer = new int[] { -1, 1 };
-    int[] XnumVer = new int[] { 1, -1 };
+    int[] XnumVer = new int[] { -1, 1 };
     int[] ZnumHor = new int[] { -1, 1 };
-    int[] XnumHor = new int[] { 1, -1, 1, -1 };
+    int[] XnumHor = new int[] { -1, 1, -1, 1 };
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +49,7 @@ public class King : MonoBehaviour
         //前後
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if ((i == 0 && _piece.TileNumZ != 0) || (i == 1 && _piece.TileNumZ != 7))
+            if ((i == 0 && _piece.TileNumZ != 0) || (i == 1 && _piece.TileNumZ != 7)) //IndexOutOfRange防止
             {
                 GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 0);
 
@@ -67,16 +67,19 @@ public class King : MonoBehaviour
         //左右
         for (int i = 0; i < XnumVer.Length; i++)
         {
-            GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 0);
+            if ((i == 0 && _piece.TileNumX != 0) || (i == 1 && _piece.TileNumX != 7))
+            {
+                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 0);
 
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 1);
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 2);
+                //どっちのターンか
+                if (_manager.Phase == GameManager.PlayerPhase.White)
+                {
+                    GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 1);
+                }
+                else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                {
+                    GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 2);
+                }
             }
         }
         //斜め
@@ -84,30 +87,38 @@ public class King : MonoBehaviour
         {
             if (i <= 1) //前
             {
-                GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 0);
+                if ((i == 0 && _piece.TileNumX != 0 && _piece.TileNumZ != 0) ||
+                    (i == 1 && _piece.TileNumX != 7 && _piece.TileNumZ != 0))
+                {
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 0);
 
-                //どっちのターンか
-                if (_manager.Phase == GameManager.PlayerPhase.White)
-                {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 1);
-                }
-                else if (_manager.Phase == GameManager.PlayerPhase.Black)
-                {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 2);
+                    //どっちのターンか
+                    if (_manager.Phase == GameManager.PlayerPhase.White)
+                    {
+                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 1);
+                    }
+                    else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                    {
+                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 2);
+                    }
                 }
             }
             else //後ろ
             {
-                GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 0);
+                if ((i == 2 && _piece.TileNumX != 0 && _piece.TileNumZ != 7) ||
+                    (i == 3 && _piece.TileNumX != 7 && _piece.TileNumZ != 7))
+                {
+                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 0);
 
-                //どっちのターンか
-                if (_manager.Phase == GameManager.PlayerPhase.White)
-                {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 1);
-                }
-                else if (_manager.Phase == GameManager.PlayerPhase.Black)
-                {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 2);
+                    //どっちのターンか
+                    if (_manager.Phase == GameManager.PlayerPhase.White)
+                    {
+                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 1);
+                    }
+                    else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                    {
+                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 2);
+                    }
                 }
             }
         }
