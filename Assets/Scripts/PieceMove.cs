@@ -70,6 +70,11 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
         {
             Debug.Log("‚·‚Å‚É‹î‚ª‘I‘ğó‘Ô‚Å‚·");
         }
+
+        if (_piece.SelectPiece != null)
+        {
+
+        }
     }
 
     // Start is called before the first frame update

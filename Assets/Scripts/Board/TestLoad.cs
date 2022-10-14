@@ -136,6 +136,7 @@ public class TestLoad : MonoBehaviour
         Debug.Log(obj);
     }
 
+    //配置する駒を選ぶ処理
     // Update is called once per frame
     void Update()
     {
@@ -170,10 +171,6 @@ public class TestLoad : MonoBehaviour
                         BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
                         SetPiece = null;
                     }
-                }
-                else if (SetPiece == null)
-                {
-                    Debug.Log("駒が指定されていません");
                 }
             }
         }
