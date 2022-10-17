@@ -78,19 +78,17 @@ public class TestLoad : MonoBehaviour
                         //読み込んだ情報を数字のジャグ配列に変換
                         BoardInfo[count][i] = int.Parse(Board[count][i]);
                         Debug.Log(BoardInfo[count][i]);
+                        Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
+                        Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
 
                         if (tile == null || tile == _tile[1])
                         {
                             setTile = Instantiate(_tile[0], new Vector3(x, 0, z), _tile[0].transform.rotation);
-                            Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
-                            Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
                             tile = _tile[0];
                         }
                         else if (tile == _tile[0])
                         {
                             setTile = Instantiate(_tile[1], new Vector3(x, 0, z), _tile[0].transform.rotation);
-                            Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
-                            Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
                             tile = _tile[1];
                         }
                         //駒の初期配置
