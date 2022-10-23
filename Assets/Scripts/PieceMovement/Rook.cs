@@ -32,11 +32,11 @@ public class Rook : MonoBehaviour
             {
                 if (_piece.Movable[i, j] == true)
                 {
-                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
                 }
                 else
                 {
-                    _board.Tiles[i, j].gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
                 }
             }
         }

@@ -11,7 +11,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_piece.SelectPiece != null) //ここに、動けるマスであることの条件も書く
+        //↓なにか駒が選択されていて、クリックされたマスが探索範囲内なら
+        if (_piece.SelectPiece != null &&
+            _board.Tiles[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<MeshRenderer>().enabled == true)
         {
             //駒のpositionをこのマスに移動させて、マスの情報を更新する
             //元々駒がいたマスは0になる
