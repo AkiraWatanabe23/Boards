@@ -62,7 +62,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(j - 1, i - 1);
                     break;
                 }
-                else //ñ°ï˚ãÓ(âΩÇ‡ÇπÇ∏Ç…íTçıèIóπ)
+                else if (_board.BoardInfo[i - 1][j - 1] > 0) //ñ°ï˚ãÓ(âΩÇ‡ÇπÇ∏Ç…íTçıèIóπ)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -72,7 +72,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(j - 1, i - 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i - 1][j - 1] < 0)
                     break;
             }
             j--;
@@ -95,7 +95,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(k + 1, i - 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i - 1][k + 1] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -105,7 +105,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(k + 1, i - 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i - 1][k + 1] < 0)
                     break;
             }
             k++;
@@ -132,7 +132,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(j - 1, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][j - 1] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -142,7 +142,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(j - 1, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][j - 1] < 0)
                     break;
             }
             j--;
@@ -165,7 +165,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(k + 1, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][k + 1] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -175,7 +175,7 @@ public class Bishop : MonoBehaviour
                     GetableRay(k + 1, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][k + 1] < 0)
                     break;
             }
             k++;
