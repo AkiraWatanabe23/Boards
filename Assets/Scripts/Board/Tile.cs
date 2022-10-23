@@ -12,13 +12,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         //↓なにか駒が選択されていて、クリックされたマスが探索範囲内なら
-        if (_piece.SelectPiece != null &&
-            _board.Tiles[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<MeshRenderer>().enabled == true)
+        int x = Mathf.Abs((int)gameObject.transform.position.x);
+        int z = Mathf.Abs((int)gameObject.transform.position.z);
+
+        if (_piece.SelectPiece != null && _board.Tiles[x, z].GetComponent<MeshRenderer>().enabled == true)
         {
             //駒のpositionをこのマスに移動させて、マスの情報を更新する
+            _piece.SelectPiece.transform.position = gameObject.transform.position;
             //元々駒がいたマスは0になる
             //移動してきたマスはきた駒の番号に変換される
-            _piece.SelectPiece = null;
+            _piece.SelectPiece = null; //駒の選択状態を切る
             //ターンを切り替える
         }
         else
