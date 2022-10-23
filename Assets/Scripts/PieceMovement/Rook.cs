@@ -65,18 +65,17 @@ public class Rook : MonoBehaviour
                     GetableRay(_piece.TileNumX, i - 1);
                     break;
                 }
-                else //–¡•û‹î(‰½‚à‚¹‚¸‚É’TõI—¹)
+                else if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0) //–¡•û‹î(‰½‚à‚¹‚¸‚É’TõI—¹)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
             {
-                //“G‹î
                 if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
                 {
                     GetableRay(_piece.TileNumX, i - 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
                     break;
             }
         }
@@ -95,7 +94,7 @@ public class Rook : MonoBehaviour
                     GetableRay(_piece.TileNumX, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][_piece.TileNumX] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -105,7 +104,7 @@ public class Rook : MonoBehaviour
                     GetableRay(_piece.TileNumX, i + 1);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[i + 1][_piece.TileNumX] < 0)
                     break;
             }
         }
@@ -124,7 +123,7 @@ public class Rook : MonoBehaviour
                     GetableRay(i + 1, _piece.TileNumZ);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -134,7 +133,7 @@ public class Rook : MonoBehaviour
                     GetableRay(i + 1, _piece.TileNumZ);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] < 0)
                     break;
             }
         }
@@ -153,7 +152,7 @@ public class Rook : MonoBehaviour
                     GetableRay(i - 1, _piece.TileNumZ);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] > 0)
                     break;
             }
             else if (_manager.Phase == GameManager.PlayerPhase.Black)
@@ -163,7 +162,7 @@ public class Rook : MonoBehaviour
                     GetableRay(i - 1, _piece.TileNumZ);
                     break;
                 }
-                else
+                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] < 0)
                     break;
             }
         }
