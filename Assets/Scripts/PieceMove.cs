@@ -30,12 +30,6 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 //駒が選ばれていなかった場合
                 if (_piece.PieceNum == 0)
                 {
-                    _piece.SelectPiece = gameObject;
-                    _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Select;
-                    _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
-                    _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
-                    _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                    _piece.PieceMovement();
                     Debug.Log($"{go} を選びました");
                 }
                 //駒の選択を切り替える場合
@@ -51,14 +45,9 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                         //駒を切り替えた時に選んでいない状態に戻す処理
                         _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Black;
                     }
-                    _piece.SelectPiece = gameObject;
-                    _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Select;
-                    _piece.PieceNum = (int)gameObject.GetComponent<PieceMove>().Type;
-                    _piece.TileNumX = Mathf.Abs((int)gameObject.transform.position.x);
-                    _piece.TileNumZ = Mathf.Abs((int)gameObject.transform.position.z);
-                    _piece.PieceMovement();
                     Debug.Log("選ぶ駒を切り替えます");
                 }
+                _piece.PieceSelect(gameObject);
             }
             //相手のターンだった or 自ターンに相手の駒を選んだ
             else

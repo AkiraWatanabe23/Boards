@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
+    [SerializeField] GameManager _manager;
+    [SerializeField] TestLoad _board;
     [SerializeField] Material _white;
     [SerializeField] Material _black;
     [SerializeField] Material _select;
@@ -61,6 +63,43 @@ public class PieceManager : MonoBehaviour
                 Debug.Log("King");
                 GetComponent<King>().Movement();
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="selected">選ばれた駒</param>
+    public void PieceSelect(GameObject selected)
+    {
+        SelectPiece = selected;
+        SelectPiece.GetComponent<MeshRenderer>().material = Select;
+        PieceNum = (int)selected.GetComponent<PieceMove>().Type;
+        TileNumX = Mathf.Abs((int)selected.transform.position.x);
+        TileNumZ = Mathf.Abs((int)selected.transform.position.z);
+        PieceMovement();
+    }
+
+    /// <summary>
+    /// マスの移動
+    /// </summary>
+    /// <param name="x">移動選択されたマスのx座標</param>
+    /// <param name="z">移動選択されたマスのz座標</param>
+    /// <param name="square">移動選択されたマス</param>
+    public void MoveToSquare(int x, int z, GameObject square)
+    {
+        if (SelectPiece != null && _board.Tiles[x, z].GetComponent<MeshRenderer>().enabled == true)
+        {
+            //駒のpositionをこのマスに移動させて、マスの情報を更新する
+            SelectPiece.transform.position = square.transform.position + new Vector3(0, 0.1f, 0);
+            //元々駒がいたマスは0になる
+            //移動してきたマスはきた駒の番号に変換される
+            //駒の選択状態を切る
+            SelectPiece = null;
+            PieceNum = 0;
+            //ターンを切り替える(白→黒、黒→白)
+            _manager.Phase = _manager.Phase == GameManager.PlayerPhase.White
+                ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
         }
     }
 

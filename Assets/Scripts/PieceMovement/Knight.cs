@@ -10,11 +10,11 @@ public class Knight : MonoBehaviour
     PieceManager _piece;
     TestLoad _board;
     //前後方向のマスからの移動差
-    int[] ZnumVer = new int[] { -2, -2, 2, 2 };
-    int[] XnumVer = new int[] { -1, 1, -1, 1 };
+    readonly int[] ZnumVer = new int[] { -2, -2, 2, 2 };
+    readonly int[] XnumVer = new int[] { -1, 1, -1, 1 };
     //左右方向のマスからの移動差
-    int[] ZnumHor = new int[] { -1, 1, -1, 1 };
-    int[] XnumHor = new int[] { -2, -2, 2, 2 };
+    readonly int[] ZnumHor = new int[] { -1, 1, -1, 1 };
+    readonly int[] XnumHor = new int[] { -2, -2, 2, 2 };
 
     // Start is called before the first frame update
     void Start()
