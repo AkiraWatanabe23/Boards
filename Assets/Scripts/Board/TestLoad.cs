@@ -65,7 +65,7 @@ public class TestLoad : MonoBehaviour
 
                     //盤面の初期設定(盤面を出し、駒を初期配置に設定する...盤面は左上から右下にかけて配置)
                     //===============================================================
-                    if (tile != null) //最初は白駒から置く
+                    if (tile != null) //最初は白マスから配置
                     {
                         if (z % 2 != 0)
                             tile = _tile[0];
@@ -100,8 +100,6 @@ public class TestLoad : MonoBehaviour
                         setTile.transform.SetParent(gameObject.transform);
                         x++;
                     }
-                    //Debug.Log(count); //whileが回っている回数を確認する
-                    //Debug.Log(value); //value...1行ごとの入力(2行目以降)
                     count++;
                     x = 0;
                     z--;
@@ -133,7 +131,7 @@ public class TestLoad : MonoBehaviour
         Debug.Log(obj);
     }
 
-    //配置する駒を選ぶ処理
+    //新しく配置する駒を選択し、空いているマスに配置する処理
     // Update is called once per frame
     void Update()
     {
@@ -153,18 +151,12 @@ public class TestLoad : MonoBehaviour
                     if (BoardInfo[Mathf.Abs(z)][x] == 0)
                     {
                         //配置する駒を選べるようにする(現在は指定の駒を置くようになっている)
-                        if (_manager.Phase == GameManager.PlayerPhase.White)
-                        {
-                            Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
-                            _manager.Phase = GameManager.PlayerPhase.Black;
-                        } 
-                        else if (_manager.Phase == GameManager.PlayerPhase.Black)
-                        {
-                            Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
-                            BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
-                            _manager.Phase = GameManager.PlayerPhase.White;
-                        }
+                        Instantiate(SetPiece, new Vector3(x, 0.1f, z), SetPiece.transform.rotation, GameObject.Find("Piece").transform);
+                        BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
+
+                        _manager.Phase = _manager.Phase == GameManager.PlayerPhase.White
+                            ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
+
                         BoardInfo[Mathf.Abs(z)][x] = (int)SetPiece.GetComponent<PieceMove>().Type;
                         SetPiece = null;
                     }

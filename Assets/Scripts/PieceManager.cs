@@ -95,6 +95,8 @@ public class PieceManager : MonoBehaviour
             //元々駒がいたマスは0になる
             //移動してきたマスはきた駒の番号に変換される
             //駒の選択状態を切る
+            SelectPiece.GetComponent<Renderer>().material
+                = SelectPiece.CompareTag("WhitePiece") ? White : Black;
             SelectPiece = null;
             PieceNum = 0;
             //ターンを切り替える(白→黒、黒→白)
@@ -104,7 +106,7 @@ public class PieceManager : MonoBehaviour
     }
 
     /// <summary> 駒の切り替え時にそれまで選んでいた駒の探索を切る </summary>
-    void SearchReset()
+    public void SearchReset()
     {
         for (int i = 0; i < 8; i++)
         {

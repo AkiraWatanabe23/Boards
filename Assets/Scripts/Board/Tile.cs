@@ -17,7 +17,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         int x = Mathf.Abs((int)gameObject.transform.position.x);
         int z = Mathf.Abs((int)gameObject.transform.position.z);
 
+        //選択状態の駒を指定したマスに移動させる
         _piece.MoveToSquare(x, z, gameObject);
+        _piece.SearchReset();
     }
 
     // Start is called before the first frame update

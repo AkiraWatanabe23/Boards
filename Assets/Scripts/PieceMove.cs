@@ -38,12 +38,11 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                     if (_piece.SelectPiece.CompareTag("WhitePiece"))
                     {
                         //駒を切り替えた時に選んでいない状態に戻す処理(現在は色を戻すだけ)
-                        _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.White;
+                        _piece.SelectPiece.GetComponent<Renderer>().material = _piece.White;
                     }
                     else if (_piece.SelectPiece.CompareTag("BlackPiece"))
                     {
-                        //駒を切り替えた時に選んでいない状態に戻す処理
-                        _piece.SelectPiece.GetComponent<MeshRenderer>().material = _piece.Black;
+                        _piece.SelectPiece.GetComponent<Renderer>().material = _piece.Black;
                     }
                     Debug.Log("選ぶ駒を切り替えます");
                 }
