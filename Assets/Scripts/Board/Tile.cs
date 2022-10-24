@@ -21,12 +21,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             _piece.SelectPiece.transform.position = gameObject.transform.position;
             //元々駒がいたマスは0になる
             //移動してきたマスはきた駒の番号に変換される
-            _piece.SelectPiece = null; //駒の選択状態を切る
+            //駒の選択状態を切る
+            _piece.SelectPiece = null;
+            _piece.PieceNum = 0;
             //ターンを切り替える
+            _manager.Phase = _manager.Phase == GameManager.PlayerPhase.White
+                ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
         }
         else
         {
-            Debug.Log("ここには動けない");
+            Debug.Log($"ここには動けない {x}, {z}");
         }
     }
 

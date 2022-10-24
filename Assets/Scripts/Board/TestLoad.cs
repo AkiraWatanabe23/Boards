@@ -79,7 +79,6 @@ public class TestLoad : MonoBehaviour
                         BoardInfo[count][i] = int.Parse(Board[count][i]);
                         Debug.Log(BoardInfo[count][i]);
                         Tiles[count, i] = Instantiate(_movableTile, new Vector3(x, 0.1f, z), _movableTile.transform.rotation);
-                        Tiles[count, i].GetComponent<MeshRenderer>().enabled = false;
 
                         if (tile == null || tile == _tile[1])
                         {
