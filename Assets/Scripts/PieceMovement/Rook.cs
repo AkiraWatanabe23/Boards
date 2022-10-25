@@ -51,121 +51,68 @@ public class Rook : MonoBehaviour
         //前後方向
         for (int i = _piece.TileNumZ; i > 0; i--)
         {
-            //マスが空いていたら動ける
-            if (_board.BoardInfo[i - 1][_piece.TileNumX] == 0)
-            {
-                _piece.Movable[i - 1, _piece.TileNumX] = true;
-            }
-
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0) //敵駒(獲れる状態に切り替えてから探索終了)
-                {
-                    GetableRay(_piece.TileNumX, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0) //味方駒(何もせずに探索終了)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i - 1][_piece.TileNumX] > 0)
-                {
-                    GetableRay(_piece.TileNumX, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][_piece.TileNumX] < 0)
-                    break;
-            }
+            if (MovableCheck(_piece.TileNumX, i - 1)) //true が返ってきたら処理を続行
+                continue;
+            else                                      //false が返ってきたら処理を終了
+                break;
         }
 
         for (int i = _piece.TileNumZ; i < 7; i++)
         {
-            if (_board.BoardInfo[i + 1][_piece.TileNumX] == 0)
-            {
-                _piece.Movable[i + 1, _piece.TileNumX] = true;
-            }
-
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i + 1][_piece.TileNumX] < 0)
-                {
-                    GetableRay(_piece.TileNumX, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][_piece.TileNumX] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i + 1][_piece.TileNumX] > 0)
-                {
-                    GetableRay(_piece.TileNumX, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][_piece.TileNumX] < 0)
-                    break;
-            }
+            if (MovableCheck(_piece.TileNumX, i + 1))
+                continue;
+            else
+                break;
         }
         //左右方向
         for (int i = _piece.TileNumX; i < 7; i++)
         {
-            if (_board.BoardInfo[_piece.TileNumZ][i + 1] == 0)
-            {
-                _piece.Movable[_piece.TileNumZ, i + 1] = true;
-            }
-
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ][i + 1] < 0)
-                {
-                    GetableRay(i + 1, _piece.TileNumZ);
-                    break;
-                }
-                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ][i + 1] > 0)
-                {
-                    GetableRay(i + 1, _piece.TileNumZ);
-                    break;
-                }
-                else if (_board.BoardInfo[_piece.TileNumZ][i + 1] < 0)
-                    break;
-            }
+            if (MovableCheck(i + 1, _piece.TileNumZ))
+                continue;
+            else
+                break;
         }
 
         for (int i = _piece.TileNumX; i > 0; i--)
         {
-            if (_board.BoardInfo[_piece.TileNumZ][i - 1] == 0)
-            {
-                _piece.Movable[_piece.TileNumZ, i - 1] = true;
-            }
-
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ][i - 1] < 0)
-                {
-                    GetableRay(i - 1, _piece.TileNumZ);
-                    break;
-                }
-                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[_piece.TileNumZ][i - 1] > 0)
-                {
-                    GetableRay(i - 1, _piece.TileNumZ);
-                    break;
-                }
-                else if (_board.BoardInfo[_piece.TileNumZ][i - 1] < 0)
-                    break;
-            }
+            if (MovableCheck(i - 1, _piece.TileNumZ))
+                continue;
+            else
+                break;
         }
+    }
+
+    bool MovableCheck(int x, int z)
+    {
+        //マスが空いていたら動ける
+        if (_board.BoardInfo[z][x] == 0)
+        {
+            _piece.Movable[z, x] = true;
+            return true;
+        }
+
+        //どっちのターンか
+        if (_manager.Phase == GameManager.PlayerPhase.White)
+        {
+            if (_board.BoardInfo[z][x] < 0) //敵駒(獲れる状態に切り替えてから探索終了)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] > 0) //味方駒(何もせずに探索終了)
+                return false;
+        }
+        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        {
+            if (_board.BoardInfo[z][x] > 0)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] < 0)
+                return false;
+        }
+        return false;
     }
 
     void GetableRay(int x, int z)
