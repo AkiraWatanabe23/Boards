@@ -44,142 +44,125 @@ public class Bishop : MonoBehaviour
         //前方向
         int j = _piece.TileNumX; //左前探索用
         int k = _piece.TileNumX; //右前探索用
+
         for (int i = _piece.TileNumZ; i > 0; i--)
         {
             //左前
-            if (_board.BoardInfo[i - 1][j - 1] == 0)
+            if (MovableLeft(j - 1, i - 1))
             {
-                _piece.Movable[i - 1, j - 1] = true;
-                if (j == 1) //IndexOutOfRange 防止
-                    break;
+                j--;
+                continue;
             }
-
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i - 1][j - 1] < 0) //敵駒(獲れる状態に切り替えてから探索終了)
-                {
-                    GetableRay(j - 1, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][j - 1] > 0) //味方駒(何もせずに探索終了)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i - 1][j - 1] > 0)
-                {
-                    GetableRay(j - 1, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][j - 1] < 0)
-                    break;
-            }
-            j--;
+            else
+                break;
         }
         for (int i = _piece.TileNumZ; i > 0; i--)
         {
             //右前
-            if (_board.BoardInfo[i - 1][k + 1] == 0)
+            if (MovableRight(k + 1, i - 1))
             {
-                _piece.Movable[i - 1, k + 1] = true;
-                if (k == 6)
-                    break;
+                k++;
+                continue;
             }
-
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i - 1][k + 1] < 0)
-                {
-                    GetableRay(k + 1, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][k + 1] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i - 1][k + 1] > 0)
-                {
-                    GetableRay(k + 1, i - 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i - 1][k + 1] < 0)
-                    break;
-            }
-            k++;
+            else
+                break;
         }
 
         //後ろ方向
         j = _piece.TileNumX; //左後ろ
         k = _piece.TileNumX; //右後ろ
+
         for (int i = _piece.TileNumZ; i < 7; i++)
         {
             //左後ろ
-            if (_board.BoardInfo[i + 1][j - 1] == 0)
+            if (MovableLeft(j - 1, i + 1))
             {
-                _piece.Movable[i + 1, j - 1] = true;
-                if (j == 1)
-                    break;
+                j--;
+                continue;
             }
-
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i + 1][j - 1] < 0)
-                {
-                    GetableRay(j - 1, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][j - 1] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i + 1][j - 1] > 0)
-                {
-                    GetableRay(j - 1, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][j - 1] < 0)
-                    break;
-            }
-            j--;
+            else
+                break;
         }
         for (int i = _piece.TileNumZ; i < 7; i++)
         {
             //右後ろ
-            if (_board.BoardInfo[i + 1][k + 1] == 0)
+            if (MovableRight(k + 1, i + 1))
             {
-                _piece.Movable[i + 1, k + 1] = true;
-                if (k == 6)
-                    break;
+                k++;
+                continue;
             }
-
-            //どっちのターンか
-            if (_manager.Phase == GameManager.PlayerPhase.White)
-            {
-                if (_board.BoardInfo[i + 1][k + 1] < 0)
-                {
-                    GetableRay(k + 1, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][k + 1] > 0)
-                    break;
-            }
-            else if (_manager.Phase == GameManager.PlayerPhase.Black)
-            {
-                if (_board.BoardInfo[i + 1][k + 1] > 0)
-                {
-                    GetableRay(k + 1, i + 1);
-                    break;
-                }
-                else if (_board.BoardInfo[i + 1][k + 1] < 0)
-                    break;
-            }
-            k++;
+            else
+                break;
         }
+    }
+
+    bool MovableLeft(int x, int z)
+    {
+        if (x < 0) //IndexOutOfRange 防止
+            return false;
+
+        if (_board.BoardInfo[z][x] == 0)
+        {
+            _piece.Movable[z, x] = true;
+            return true;
+        }
+
+        //どっちのターンか
+        if (_manager.Phase == GameManager.PlayerPhase.White)
+        {
+            if (_board.BoardInfo[z][x] < 0) //敵駒(獲れる状態に切り替えてから探索終了)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] > 0) //味方駒(何もせずに探索終了)
+                return false;
+        }
+        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        {
+            if (_board.BoardInfo[z][x] > 0)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] < 0)
+                return false;
+        }
+        return false;
+    }
+    bool MovableRight(int x, int z)
+    {
+        if (x > 7)
+            return false;
+
+        if (_board.BoardInfo[z][x] == 0)
+        {
+            _piece.Movable[z, x] = true;
+            return true;
+        }
+
+        //どっちのターンか
+        if (_manager.Phase == GameManager.PlayerPhase.White)
+        {
+            if (_board.BoardInfo[z][x] < 0)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] > 0)
+                return false;
+        }
+        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        {
+            if (_board.BoardInfo[z][x] > 0)
+            {
+                GetableRay(x, z);
+                return false;
+            }
+            else if (_board.BoardInfo[z][x] < 0)
+                return false;
+        }
+        return false;
     }
 
     void GetableRay(int x, int z)
