@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     PieceManager _piece;
 
     /// <summary>
-    /// 選択された駒を移動させる処理(マス一つ一つにつけない方が良い?)
+    /// 選択された駒を移動させる処理
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
@@ -19,7 +19,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         //選択状態の駒を指定したマスに移動させる
         _piece.MoveToSquare(x, z, gameObject);
-        _piece.SearchReset();
     }
 
     // Start is called before the first frame update

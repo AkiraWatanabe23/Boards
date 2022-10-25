@@ -88,7 +88,7 @@ public class PieceManager : MonoBehaviour
     /// <param name="square">移動選択されたマス</param>
     public void MoveToSquare(int x, int z, GameObject square)
     {
-        if (SelectPiece != null && _board.Tiles[x, z].GetComponent<MeshRenderer>().enabled == true)
+        if (SelectPiece != null && _board.Tiles[z, x].GetComponent<MeshRenderer>().enabled == true)
         {
             //駒のpositionをこのマスに移動させて、マスの情報を更新する
             SelectPiece.transform.position = square.transform.position + new Vector3(0, 0.1f, 0);
@@ -102,6 +102,7 @@ public class PieceManager : MonoBehaviour
             //ターンを切り替える(白→黒、黒→白)
             _manager.Phase = _manager.Phase == GameManager.PlayerPhase.White
                 ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
+            SearchReset();
         }
     }
 

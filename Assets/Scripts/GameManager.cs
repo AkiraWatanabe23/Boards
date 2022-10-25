@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Tooltip("どっちのターンか"), SerializeField] Text _phase;
+    [Tooltip("どっちのターンか")]
+    [SerializeField] Text _phase;
     public PlayerPhase Phase { get; set; }
     int _beFrPhase; //(BeforeFramePhase)
 
