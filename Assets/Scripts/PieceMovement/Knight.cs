@@ -124,26 +124,26 @@ public class Knight : MonoBehaviour
 
     void GetableCheck(int x, int z, int phase)
     {
-        if (phase == 0) //ƒ}ƒX‚Ì’Tõ
+        switch (phase)
         {
-            if (_board.BoardInfo[z][x] == 0)
-            {
-                _piece.Movable[z, x] = true;
-            }
-        }
-        else if (phase == 1) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(”’)
-        {
-            if (_board.BoardInfo[z][x] < 0)
-            {
-                GetableRay(x, z);
-            }
-        }
-        else if (phase == 2) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(•)
-        {
-            if (_board.BoardInfo[z][x] > 0)
-            {
-                GetableRay(x, z);
-            }
+            case 0: //ƒ}ƒX‚Ì’Tõ
+                if (_board.BoardInfo[z][x] == 0)
+                {
+                    _piece.Movable[z, x] = true;
+                }
+                break;
+            case 1: //Šl‚ê‚é‹î‚ª‚ ‚é‚©(”’)
+                if (_board.BoardInfo[z][x] < 0)
+                {
+                    GetableRay(x, z);
+                }
+                break;
+            case 2: //Šl‚ê‚é‹î‚ª‚ ‚é‚©(•)
+                if (_board.BoardInfo[z][x] > 0)
+                {
+                    GetableRay(x, z);
+                }
+                break;
         }
     }
 
