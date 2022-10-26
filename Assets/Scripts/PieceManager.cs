@@ -67,13 +67,13 @@ public class PieceManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// 駒を選んだ時の移動可能範囲の探索
     /// </summary>
     /// <param name="selected">選ばれた駒</param>
     public void PieceSelect(GameObject selected)
     {
         SelectPiece = selected;
-        SelectPiece.GetComponent<MeshRenderer>().material = Select;
+        SelectPiece.GetComponent<Renderer>().material = Select;
         PieceNum = (int)selected.GetComponent<PieceMove>().Type;
         TileNumX = Mathf.Abs((int)selected.transform.position.x);
         TileNumZ = Mathf.Abs((int)selected.transform.position.z);
@@ -104,6 +104,30 @@ public class PieceManager : MonoBehaviour
                 ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
             SearchReset();
         }
+    }
+
+    /// <summary>
+    /// 敵の駒を奪う
+    /// </summary>
+    /// <param name="x">奪うために選んだ駒のx座標</param>
+    /// <param name="z">奪うために選んだ駒のz座標</param>
+    /// <param name="piece">奪うために選ばれた駒</param>
+    public void GetPiece(int x, int z, GameObject piece)
+    {
+        //奪う駒をDestroyし、駒をそのマス(position)に移動させる
+        Destroy(piece);
+        SelectPiece.transform.position = new Vector3(x, 0.1f, z);
+        //元々駒がいたマスは0になる
+        //移動してきたマスはきた駒の番号に変換される
+        //駒の選択状態を切る
+        SelectPiece.GetComponent<Renderer>().material
+            = SelectPiece.CompareTag("WhitePiece") ? White : Black;
+        SelectPiece = null;
+        PieceNum = 0;
+        //ターンを切り替える(白→黒、黒→白)
+        _manager.Phase = _manager.Phase == GameManager.PlayerPhase.White
+            ? GameManager.PlayerPhase.Black : GameManager.PlayerPhase.White;
+        SearchReset();
     }
 
     /// <summary> 駒の切り替え時にそれまで選んでいた駒の探索を切る </summary>

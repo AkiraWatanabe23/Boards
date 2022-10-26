@@ -52,6 +52,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
             else
             {
                 Debug.Log("Œ»İ‚Í‘Šè‚Ìƒ^[ƒ“‚Å‚·");
+                //‚±‚±‚É“G‚Ì‹î‚ğ’D‚¤ˆ—‚ğ‘‚­(PieceManager‚©‚çŠÖ”ŒÄ‚Ô)
             }
         }
         else
