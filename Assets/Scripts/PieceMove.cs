@@ -54,6 +54,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
                 if (_piece.SelectPiece != null)
                 {
                     //‚±‚±‚É“G‚Ì‹î‚ğ’D‚¤ˆ—‚ğ‘‚­(PieceManager‚©‚çŠÖ”ŒÄ‚Ô)
+                    _piece.GetPiece((int)gameObject.transform.position.x, (int)gameObject.transform.position.z, gameObject);
                 }
                 else
                 {
