@@ -51,8 +51,14 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
             //相手のターンだった or 自ターンに相手の駒を選んだ
             else
             {
-                Debug.Log("現在は相手のターンです");
-                //ここに敵の駒を奪う処理を書く(PieceManagerから関数呼ぶ)
+                if (_piece.SelectPiece != null)
+                {
+                    //ここに敵の駒を奪う処理を書く(PieceManagerから関数呼ぶ)
+                }
+                else
+                {
+                    Debug.Log("現在は相手のターンです");
+                }
             }
         }
         else
