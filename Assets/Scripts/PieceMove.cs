@@ -53,8 +53,16 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
             {
                 if (_piece.SelectPiece != null)
                 {
-                    //‚±‚±‚É“G‚Ì‹î‚ğ’D‚¤ˆ—‚ğ‘‚­(PieceManager‚©‚çŠÖ”ŒÄ‚Ô)
-                    _piece.GetPiece((int)gameObject.transform.position.x, (int)gameObject.transform.position.z, gameObject);
+                    //’D‚¤‹î‚ª’Tõ”ÍˆÍ“à‚Ì‹î‚Å‚ ‚é•K—v‚ª‚ ‚é
+                    if (gameObject.GetComponent<Renderer>().material == _piece.Select)
+                    {
+                        //‚±‚±‚É“G‚Ì‹î‚ğ’D‚¤ˆ—‚ğ‘‚­(PieceManager‚©‚çŠÖ”ŒÄ‚Ô)
+                        _piece.GetPiece((int)gameObject.transform.position.x, (int)gameObject.transform.position.z, gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log($"{gameObject.name} ‚Í’Tõ”ÍˆÍŠO‚Å‚·");
+                    }
                 }
                 else
                 {
