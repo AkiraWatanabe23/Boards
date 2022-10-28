@@ -90,9 +90,12 @@ public class PieceManager : MonoBehaviour
     {
         if (SelectPiece != null && _board.Tiles[z, x].GetComponent<MeshRenderer>().enabled == true)
         {
+            //元々駒がいたマスは0になる(何も駒が置かれていない状態にする)
+            _board.BoardInfo
+                [Mathf.Abs((int)SelectPiece.transform.position.z)][Mathf.Abs((int)SelectPiece.transform.position.x)]
+                = 0;
             //駒のpositionをこのマスに移動させて、マスの情報を更新する
             SelectPiece.transform.position = square.transform.position + new Vector3(0, 0.1f, 0);
-            //元々駒がいたマスは0になる
             //移動してきたマスはきた駒の番号(enum の値)に変換される
             _board.BoardInfo[z][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
             //駒の選択状態を切る
@@ -115,10 +118,13 @@ public class PieceManager : MonoBehaviour
     /// <param name="piece">奪うために選ばれた駒</param>
     public void GetPiece(int x, int z, GameObject piece)
     {
+        //元々駒がいたマスは0になる(何も駒が置かれていない状態にする)
+        _board.BoardInfo
+            [Mathf.Abs((int)SelectPiece.transform.position.z)][Mathf.Abs((int)SelectPiece.transform.position.x)]
+            = 0;
         //奪う駒をDestroyし、駒をそのマス(position)に移動させる
         Destroy(piece);
         SelectPiece.transform.position = new Vector3(x, 0.1f, z);
-        //元々駒がいたマスは0になる
         //移動してきたマスはきた駒の番号に変換される
         _board.BoardInfo[z][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
         //駒の選択状態を切る
