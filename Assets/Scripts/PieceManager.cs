@@ -93,7 +93,8 @@ public class PieceManager : MonoBehaviour
             //駒のpositionをこのマスに移動させて、マスの情報を更新する
             SelectPiece.transform.position = square.transform.position + new Vector3(0, 0.1f, 0);
             //元々駒がいたマスは0になる
-            //移動してきたマスはきた駒の番号に変換される
+            //移動してきたマスはきた駒の番号(enum の値)に変換される
+            _board.BoardInfo[z][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
             //駒の選択状態を切る
             SelectPiece.GetComponent<Renderer>().material
                 = SelectPiece.CompareTag("WhitePiece") ? White : Black;
@@ -119,6 +120,7 @@ public class PieceManager : MonoBehaviour
         SelectPiece.transform.position = new Vector3(x, 0.1f, z);
         //元々駒がいたマスは0になる
         //移動してきたマスはきた駒の番号に変換される
+        _board.BoardInfo[z][x] = (int)SelectPiece.GetComponent<PieceMove>().Type;
         //駒の選択状態を切る
         SelectPiece.GetComponent<Renderer>().material
             = SelectPiece.CompareTag("WhitePiece") ? White : Black;

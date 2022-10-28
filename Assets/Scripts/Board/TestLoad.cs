@@ -22,15 +22,15 @@ public class TestLoad : MonoBehaviour
     RaycastHit _hit;
     GameManager _manager;
 
-    //SetPieceに代入する配置する駒の種類
+    /// <summary> SetPieceに代入する配置する駒の種類 </summary>
     public GameObject[] Pieces { get => _pieces; set => _pieces = value; }
-    //移動可能を示すパネルの設置
+    /// <summary> 移動可能を示すパネルの設置 </summary>
     public GameObject[,] Tiles { get => _tiles; set => _tiles = value; }
-    //盤の初期配置を読み込む用
+    /// <summary> 盤の初期配置を読み込む用 </summary>
     public string[][] Board { get => _board; set => _board = value; }
-    //読み込んだものを数値として扱い、シーン上に起こす用
+    /// <summary> 読み込んだものを数値として扱い、シーン上に起こす用 </summary>
     public int[][] BoardInfo { get => _boardInfo; set => _boardInfo = value; }
-    //新しく駒を配置する
+    /// <summary> 新しく駒を配置する </summary>
     public GameObject SetPiece { get; set; }
 
     void Awake()

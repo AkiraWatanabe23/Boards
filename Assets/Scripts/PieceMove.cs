@@ -19,7 +19,6 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
         var go = eventData.pointerCurrentRaycast.gameObject;
 
         //駒の選択
-        //現在...駒が選ばれていない or 選択状態の駒と新しく選んだ駒が異なる
         //※駒を選べる条件...駒が選ばれていない or 自分のターンに自分の駒を選ぶこと
         if (_piece.PieceNum == 0 || _piece.SelectPiece != go)
         {
@@ -73,11 +72,6 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
         else
         {
             Debug.Log("すでに駒が選択状態です");
-        }
-
-        if (_piece.SelectPiece != null)
-        {
-
         }
     }
 
