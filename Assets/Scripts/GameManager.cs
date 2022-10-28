@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         _phase.text = Phase.ToString();
+        if ((int)Phase != _beFrPhase)
+        {
+            WinningCheck();
+            _beFrPhase = (int)Phase;
+        }
     }
 
     //ターンが切り替わったタイミングでゲームがクリアされたか判定する
@@ -28,11 +33,10 @@ public class GameManager : MonoBehaviour
     //クリアされたら、true を返す
     bool WinningCheck()
     {
-        if ((int)Phase != _beFrPhase)
-        {
-            //この上に勝利判定処理を書く
-            _beFrPhase = (int)Phase;
-        }
+        //ここに勝利判定処理を書く
+        //1,敵のKingを獲ること
+        //2,同じ色の駒を縦、横、斜めのいずれかで4つ並べる
+        //3,同じ種類の駒を縦、横、斜めのいずれかで4つ並べる(色は混ざっていてもよい)
         return false;
     }
 
