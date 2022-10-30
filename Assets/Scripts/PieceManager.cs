@@ -9,14 +9,13 @@ public class PieceManager : MonoBehaviour
     [SerializeField] Material _white;
     [SerializeField] Material _black;
     [SerializeField] Material _select;
-    [SerializeField] GameObject _selectPiece;
     bool[,] _movable = new bool[8, 8];
     public Material White { get => _white; set => _white = value; }
     public Material Black { get => _black; set => _black = value; }
     /// <summary> 駒を選んだ時に色を変える </summary>
     public Material Select { get => _select; set => _select = value; }
     /// <summary> 現在選ばれている駒 </summary>
-    public GameObject SelectPiece { get => _selectPiece; set => _selectPiece = value; }
+    public GameObject SelectPiece { get; set; }
     /// <summary> 駒に割り振った番号(個別探索処理に使う) </summary>
     public int PieceNum { get; set; }
     //選択した駒のマス番号を取得する(X,Z)
@@ -123,6 +122,8 @@ public class PieceManager : MonoBehaviour
             [Mathf.Abs((int)SelectPiece.transform.position.z)][Mathf.Abs((int)SelectPiece.transform.position.x)]
             = 0;
         //奪う駒をDestroyし、駒をそのマス(position)に移動させる
+        //奪った駒を保存しておく(Kingを獲ったかでの勝利判定をとるため)
+        _manager.GottenPiece = piece;
         Destroy(piece);
         SelectPiece.transform.position = new Vector3(x, 0.1f, z);
         //移動してきたマスはきた駒の番号に変換される

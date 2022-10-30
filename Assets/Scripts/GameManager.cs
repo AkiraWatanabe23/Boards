@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text _phase;
     public PlayerPhase Phase { get; set; }
     int _beFrPhase; //(BeforeFramePhase)
+    /// <summary>Šl‚Á‚½‹î </summary>
+    public GameObject GottenPiece { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,10 @@ public class GameManager : MonoBehaviour
     {
         //‚±‚±‚ÉŸ—˜”»’èˆ—‚ğ‘‚­
         //1,“G‚ÌKing‚ğŠl‚é‚±‚Æ
+        if (GottenPiece.name.Contains("King"))
+        {
+
+        }
         //2,“¯‚¶F‚Ì‹î‚ğcA‰¡AÎ‚ß‚Ì‚¢‚¸‚ê‚©‚Å4‚Â•À‚×‚é
         //3,“¯‚¶í—Ş‚Ì‹î‚ğcA‰¡AÎ‚ß‚Ì‚¢‚¸‚ê‚©‚Å4‚Â•À‚×‚é(F‚Í¬‚´‚Á‚Ä‚¢‚Ä‚à‚æ‚¢)
         return false;
