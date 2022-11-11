@@ -16,7 +16,7 @@ public class SelectPiece : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     // Start is called before the first frame update
     void Start()
     {
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _manager = GameObject.Find("Piece").GetComponent<GameManager>();
         _board = GameObject.Find("Board").GetComponent<TestLoad>();
     }
 

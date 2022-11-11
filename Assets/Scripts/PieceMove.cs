@@ -79,7 +79,7 @@ public class PieceMove : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         _piece = GetComponentInParent<PieceManager>();
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _manager = GetComponentInParent<GameManager>();
     }
 
     public enum PieceType

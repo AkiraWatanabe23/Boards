@@ -15,7 +15,7 @@ public abstract class MovementBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Manager = GameObject.Find("Piece").GetComponent<GameManager>();
         Piece = GameObject.Find("Piece").GetComponent<PieceManager>();
         Board = GameObject.Find("Board").GetComponent<TestLoad>();
     }
