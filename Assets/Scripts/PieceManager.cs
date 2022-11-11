@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
-    [SerializeField] GameManager _manager;
-    [SerializeField] TestLoad _board;
-    [SerializeField] Material _white;
-    [SerializeField] Material _black;
-    [SerializeField] Material _select;
-    bool[,] _movable = new bool[8, 8];
+    [SerializeField] private GameManager _manager;
+    [SerializeField] private TestLoad _board;
+    [SerializeField] private Material _white;
+    [SerializeField] private Material _black;
+    [SerializeField] private Material _select;
+    private bool[,] _movable = new bool[8, 8];
     public Material White { get => _white; set => _white = value; }
     public Material Black { get => _black; set => _black = value; }
     /// <summary> ‹î‚ð‘I‚ñ‚¾Žž‚ÉF‚ð•Ï‚¦‚é </summary>

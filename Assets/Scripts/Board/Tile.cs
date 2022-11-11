@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour, IPointerClickHandler
 {
-    PieceManager _piece;
+    private PieceManager _piece;
 
     /// <summary>
     /// ‘I‘ğ‚³‚ê‚½‹î‚ğˆÚ“®‚³‚¹‚éˆ—

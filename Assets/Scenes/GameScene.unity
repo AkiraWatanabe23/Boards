@@ -309,7 +309,6 @@ MonoBehaviour:
   _white: {fileID: 2100000, guid: b391301c47109a144bbb6408e48da028, type: 2}
   _black: {fileID: 2100000, guid: 973635ff02379f4429b7df0543346d32, type: 2}
   _select: {fileID: 2100000, guid: 69b9122416ae8c5468fff6df1edca4eb, type: 2}
-  _selectPiece: {fileID: 0}
 --- !u!114 &294898171
 MonoBehaviour:
   m_ObjectHideFlags: 0

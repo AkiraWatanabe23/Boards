@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class PieceMove : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] PieceType _type;
-    PieceManager _piece;
-    GameManager _manager;
+    [SerializeField] private PieceType _type;
+    private PieceManager _piece;
+    private GameManager _manager;
     public PieceType Type { get => _type; set => _type = value; }
 
     /// <summary>

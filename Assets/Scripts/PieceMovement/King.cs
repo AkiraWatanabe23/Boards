@@ -2,27 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class King : MonoBehaviour
+public class King : MovementBase
 {
-    [SerializeField] Material _movable;
-    [SerializeField] Material _getable;
-    GameManager _manager;
-    PieceManager _piece;
-    TestLoad _board;
-
     //‘OŒã¶‰E•ûŒü‚Ìƒ}ƒX‚©‚ç‚ÌˆÚ“®·
     readonly int[] ZnumVer = new int[] { -1, 1 };
     readonly int[] XnumVer = new int[] { -1, 1 };
     readonly int[] ZnumHor = new int[] { -1, 1 };
     readonly int[] XnumHor = new int[] { -1, 1, -1, 1 };
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _piece = GameObject.Find("Piece").GetComponent<PieceManager>();
-        _board = GameObject.Find("Board").GetComponent<TestLoad>();
-    }
 
     /// <summary>
     /// ’Tõ”ÍˆÍ‚Ì•`‰æ
@@ -33,13 +19,13 @@ public class King : MonoBehaviour
         {
             for (int j = 0; j < 8; j++)
             {
-                if (_piece.Movable[i, j] == true)
+                if (Piece.Movable[i, j] == true)
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
                 }
                 else
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
                 }
             }
         }
@@ -50,36 +36,36 @@ public class King : MonoBehaviour
         //‘OŒã
         for (int i = 0; i < ZnumVer.Length; i++)
         {
-            if ((i == 0 && _piece.TileNumZ != 0) || (i == 1 && _piece.TileNumZ != 7)) //IndexOutOfRange–h~
+            if ((i == 0 && Piece.TileNumZ != 0) || (i == 1 && Piece.TileNumZ != 7)) //IndexOutOfRange–h~
             {
-                GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 0);
+                GetableCheck(Piece.TileNumX, Piece.TileNumZ + ZnumVer[i], 0);
 
                 //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
-                if (_manager.Phase == GameManager.PlayerPhase.White)
+                if (Manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 1);
+                    GetableCheck(Piece.TileNumX, Piece.TileNumZ + ZnumVer[i], 1);
                 }
-                else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                else if (Manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    GetableCheck(_piece.TileNumX, _piece.TileNumZ + ZnumVer[i], 2);
+                    GetableCheck(Piece.TileNumX, Piece.TileNumZ + ZnumVer[i], 2);
                 }
             }
         }
         //¶‰E
         for (int i = 0; i < XnumVer.Length; i++)
         {
-            if ((i == 0 && _piece.TileNumX != 0) || (i == 1 && _piece.TileNumX != 7))
+            if ((i == 0 && Piece.TileNumX != 0) || (i == 1 && Piece.TileNumX != 7))
             {
-                GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 0);
+                GetableCheck(Piece.TileNumX + XnumVer[i], Piece.TileNumZ, 0);
 
                 //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
-                if (_manager.Phase == GameManager.PlayerPhase.White)
+                if (Manager.Phase == GameManager.PlayerPhase.White)
                 {
-                    GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 1);
+                    GetableCheck(Piece.TileNumX + XnumVer[i], Piece.TileNumZ, 1);
                 }
-                else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                else if (Manager.Phase == GameManager.PlayerPhase.Black)
                 {
-                    GetableCheck(_piece.TileNumX + XnumVer[i], _piece.TileNumZ, 2);
+                    GetableCheck(Piece.TileNumX + XnumVer[i], Piece.TileNumZ, 2);
                 }
             }
         }
@@ -88,37 +74,37 @@ public class King : MonoBehaviour
         {
             if (i <= 1) //‘O
             {
-                if ((i == 0 && _piece.TileNumX != 0 && _piece.TileNumZ != 0) ||
-                    (i == 1 && _piece.TileNumX != 7 && _piece.TileNumZ != 0))
+                if ((i == 0 && Piece.TileNumX != 0 && Piece.TileNumZ != 0) ||
+                    (i == 1 && Piece.TileNumX != 7 && Piece.TileNumZ != 0))
                 {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 0);
+                    GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[0], 0);
 
                     //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
-                    if (_manager.Phase == GameManager.PlayerPhase.White)
+                    if (Manager.Phase == GameManager.PlayerPhase.White)
                     {
-                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 1);
+                        GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[0], 1);
                     }
-                    else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                    else if (Manager.Phase == GameManager.PlayerPhase.Black)
                     {
-                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[0], 2);
+                        GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[0], 2);
                     }
                 }
             }
             else //Œã‚ë
             {
-                if ((i == 2 && _piece.TileNumX != 0 && _piece.TileNumZ != 7) ||
-                    (i == 3 && _piece.TileNumX != 7 && _piece.TileNumZ != 7))
+                if ((i == 2 && Piece.TileNumX != 0 && Piece.TileNumZ != 7) ||
+                    (i == 3 && Piece.TileNumX != 7 && Piece.TileNumZ != 7))
                 {
-                    GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 0);
+                    GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[1], 0);
 
                     //‚Ç‚Á‚¿‚Ìƒ^[ƒ“‚©
-                    if (_manager.Phase == GameManager.PlayerPhase.White)
+                    if (Manager.Phase == GameManager.PlayerPhase.White)
                     {
-                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 1);
+                        GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[1], 1);
                     }
-                    else if (_manager.Phase == GameManager.PlayerPhase.Black)
+                    else if (Manager.Phase == GameManager.PlayerPhase.Black)
                     {
-                        GetableCheck(_piece.TileNumX + XnumHor[i], _piece.TileNumZ + ZnumHor[1], 2);
+                        GetableCheck(Piece.TileNumX + XnumHor[i], Piece.TileNumZ + ZnumHor[1], 2);
                     }
                 }
             }
@@ -129,33 +115,24 @@ public class King : MonoBehaviour
     {
         if (phase == 0) //ƒ}ƒX‚Ì’Tõ
         {
-            if (_board.BoardInfo[z][x] == 0)
+            if (Board.BoardInfo[z][x] == 0)
             {
-                _piece.Movable[z, x] = true;
+                Piece.Movable[z, x] = true;
             }
         }
         else if (phase == 1) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(”’)
         {
-            if (_board.BoardInfo[z][x] < 0)
+            if (Board.BoardInfo[z][x] < 0)
             {
                 GetableRay(x, z);
             }
         }
         else if (phase == 2) //Šl‚ê‚é‹î‚ª‚ ‚é‚©(•)
         {
-            if (_board.BoardInfo[z][x] > 0)
+            if (Board.BoardInfo[z][x] > 0)
             {
                 GetableRay(x, z);
             }
-        }
-    }
-
-    void GetableRay(int x, int z)
-    {
-        //‚»‚Ì‹î‚ğŠl‚ê‚éó‘Ô‚ÉØ‚è‘Ö‚¦‚é
-        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
-        {
-            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }

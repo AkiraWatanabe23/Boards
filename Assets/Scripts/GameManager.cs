@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Tooltip("どっちのターンか")]
-    [SerializeField] Text _phase;
+    [SerializeField] private Text _phase;
+    private int _beFrPhase; //(BeforeFramePhase)
     public PlayerPhase Phase { get; set; }
-    int _beFrPhase; //(BeforeFramePhase)
     /// <summary>獲った駒 </summary>
     public GameObject GottenPiece { get; set; }
 
@@ -37,10 +37,6 @@ public class GameManager : MonoBehaviour
     {
         //ここに勝利判定処理を書く
         //1,敵のKingを獲ること
-        if (GottenPiece.name.Contains("King"))
-        {
-
-        }
         //2,同じ色の駒を縦、横、斜めのいずれかで4つ並べる
         //3,同じ種類の駒を縦、横、斜めのいずれかで4つ並べる(色は混ざっていてもよい)
         return false;

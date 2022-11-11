@@ -2,27 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knight : MonoBehaviour
+public class Knight : MovementBase
 {
-    [SerializeField] Material _movable;
-    [SerializeField] Material _getable;
-    GameManager _manager;
-    PieceManager _piece;
-    TestLoad _board;
     //前後方向のマスからの移動差
     readonly int[] ZnumVer = new int[] { -2, -2, 2, 2 };
     readonly int[] XnumVer = new int[] { -1, 1, -1, 1 };
     //左右方向のマスからの移動差
     readonly int[] ZnumHor = new int[] { -1, 1, -1, 1 };
     readonly int[] XnumHor = new int[] { -2, -2, 2, 2 };
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _piece = GameObject.Find("Piece").GetComponent<PieceManager>();
-        _board = GameObject.Find("Board").GetComponent<TestLoad>();
-    }
 
     /// <summary>
     /// 探索範囲の描画
@@ -33,13 +20,13 @@ public class Knight : MonoBehaviour
         {
             for (int j = 0; j < 8; j++)
             {
-                if (_piece.Movable[i, j] == true)
+                if (Piece.Movable[i, j] == true)
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
                 }
                 else
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
                 }
             }
         }
@@ -48,11 +35,11 @@ public class Knight : MonoBehaviour
     public void Movement()
     {
         MovableTile();
-        if (_manager.Phase == GameManager.PlayerPhase.White)
+        if (Manager.Phase == GameManager.PlayerPhase.White)
         {
             WhiteTurn();
         }
-        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        else if (Manager.Phase == GameManager.PlayerPhase.Black)
         {
             BlackTurn();
         }
@@ -61,8 +48,8 @@ public class Knight : MonoBehaviour
     /// <summary> 動けるマスか </summary>
     void MovableTile()
     {
-        int x = _piece.TileNumX;
-        int z = _piece.TileNumZ;
+        int x = Piece.TileNumX;
+        int z = Piece.TileNumZ;
 
         for (int i = 0; i < ZnumVer.Length; i++) 
         {
@@ -82,8 +69,8 @@ public class Knight : MonoBehaviour
 
     void WhiteTurn()
     {
-        int x = _piece.TileNumX;
-        int z = _piece.TileNumZ;
+        int x = Piece.TileNumX;
+        int z = Piece.TileNumZ;
 
         for (int i = 0; i < ZnumVer.Length; i++)
         {
@@ -103,8 +90,8 @@ public class Knight : MonoBehaviour
 
     void BlackTurn()
     {
-        int x = _piece.TileNumX;
-        int z = _piece.TileNumZ;
+        int x = Piece.TileNumX;
+        int z = Piece.TileNumZ;
 
         for (int i = 0; i < ZnumVer.Length; i++)
         {
@@ -127,32 +114,23 @@ public class Knight : MonoBehaviour
         switch (phase)
         {
             case 0: //マスの探索
-                if (_board.BoardInfo[z][x] == 0)
+                if (Board.BoardInfo[z][x] == 0)
                 {
-                    _piece.Movable[z, x] = true;
+                    Piece.Movable[z, x] = true;
                 }
                 break;
             case 1: //獲れる駒があるか(白)
-                if (_board.BoardInfo[z][x] < 0)
+                if (Board.BoardInfo[z][x] < 0)
                 {
                     GetableRay(x, z);
                 }
                 break;
             case 2: //獲れる駒があるか(黒)
-                if (_board.BoardInfo[z][x] > 0)
+                if (Board.BoardInfo[z][x] > 0)
                 {
                     GetableRay(x, z);
                 }
                 break;
-        }
-    }
-
-    void GetableRay(int x, int z)
-    {
-        //その駒を獲れる状態に切り替える(現時点は色変えるだけ)
-        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
-        {
-            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
         }
     }
 }

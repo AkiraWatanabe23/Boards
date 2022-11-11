@@ -11,16 +11,16 @@ using UnityEngine.AddressableAssets;
 public class TestLoad : MonoBehaviour
 {
     //配置する駒,マス
-    [SerializeField] GameObject[] _pieces = new GameObject[12];
-    [SerializeField] GameObject[] _tile = new GameObject[2];
-    [SerializeField] GameObject _movableTile;
+    [SerializeField] private GameObject[] _pieces = new GameObject[12];
+    [SerializeField] private GameObject[] _tile = new GameObject[2];
+    [SerializeField] private GameObject _movableTile;
     //マスの配列
-    GameObject[,] _tiles = new GameObject[8, 8];
+    private GameObject[,] _tiles = new GameObject[8, 8];
     //ジャグ配列を宣言
-    string[][] _board = new string[8][];
-    int[][] _boardInfo = new int[8][];
-    RaycastHit _hit;
-    GameManager _manager;
+    private string[][] _board = new string[8][];
+    private int[][] _boardInfo = new int[8][];
+    private RaycastHit _hit;
+    private GameManager _manager;
 
     /// <summary> SetPieceに代入する配置する駒の種類 </summary>
     public GameObject[] Pieces { get => _pieces; set => _pieces = value; }

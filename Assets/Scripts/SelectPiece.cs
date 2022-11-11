@@ -8,10 +8,10 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class SelectPiece : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] Material _select;
-    [SerializeField] Material _back;
-    GameManager _manager;
-    TestLoad _board;
+    [SerializeField] private Material _select;
+    [SerializeField] private Material _back;
+    private GameManager _manager;
+    private TestLoad _board;
 
     // Start is called before the first frame update
     void Start()

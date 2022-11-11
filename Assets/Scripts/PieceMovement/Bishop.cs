@@ -2,22 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bishop : MonoBehaviour
+public class Bishop : MovementBase
 {
-    [SerializeField] Material _movable;
-    [SerializeField] Material _getable;
-    GameManager _manager;
-    PieceManager _piece;
-    TestLoad _board;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _piece = GameObject.Find("Piece").GetComponent<PieceManager>();
-        _board = GameObject.Find("Board").GetComponent<TestLoad>();
-    }
-
     /// <summary>
     /// íTçıîÕàÕÇÃï`âÊ
     /// </summary>
@@ -27,13 +13,13 @@ public class Bishop : MonoBehaviour
         {
             for (int j = 0; j < 8; j++)
             {
-                if (_piece.Movable[i, j] == true)
+                if (Piece.Movable[i, j] == true)
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
                 }
                 else
                 {
-                    _board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
                 }
             }
         }
@@ -42,10 +28,10 @@ public class Bishop : MonoBehaviour
     public void Movement()
     {
         //ëOï˚å¸
-        int j = _piece.TileNumX; //ç∂ëOíTçıóp
-        int k = _piece.TileNumX; //âEëOíTçıóp
+        int j = Piece.TileNumX; //ç∂ëOíTçıóp
+        int k = Piece.TileNumX; //âEëOíTçıóp
 
-        for (int i = _piece.TileNumZ; i > 0; i--)
+        for (int i = Piece.TileNumZ; i > 0; i--)
         {
             //ç∂ëO
             if (MovableLeft(j - 1, i - 1))
@@ -56,7 +42,7 @@ public class Bishop : MonoBehaviour
             else
                 break;
         }
-        for (int i = _piece.TileNumZ; i > 0; i--)
+        for (int i = Piece.TileNumZ; i > 0; i--)
         {
             //âEëO
             if (MovableRight(k + 1, i - 1))
@@ -69,10 +55,10 @@ public class Bishop : MonoBehaviour
         }
 
         //å„ÇÎï˚å¸
-        j = _piece.TileNumX; //ç∂å„ÇÎ
-        k = _piece.TileNumX; //âEå„ÇÎ
+        j = Piece.TileNumX; //ç∂å„ÇÎ
+        k = Piece.TileNumX; //âEå„ÇÎ
 
-        for (int i = _piece.TileNumZ; i < 7; i++)
+        for (int i = Piece.TileNumZ; i < 7; i++)
         {
             //ç∂å„ÇÎ
             if (MovableLeft(j - 1, i + 1))
@@ -83,7 +69,7 @@ public class Bishop : MonoBehaviour
             else
                 break;
         }
-        for (int i = _piece.TileNumZ; i < 7; i++)
+        for (int i = Piece.TileNumZ; i < 7; i++)
         {
             //âEå„ÇÎ
             if (MovableRight(k + 1, i + 1))
@@ -101,31 +87,31 @@ public class Bishop : MonoBehaviour
         if (x < 0) //IndexOutOfRange ñhé~
             return false;
 
-        if (_board.BoardInfo[z][x] == 0)
+        if (Board.BoardInfo[z][x] == 0)
         {
-            _piece.Movable[z, x] = true;
+            Piece.Movable[z, x] = true;
             return true;
         }
 
         //Ç«Ç¡ÇøÇÃÉ^Å[ÉìÇ©
-        if (_manager.Phase == GameManager.PlayerPhase.White)
+        if (Manager.Phase == GameManager.PlayerPhase.White)
         {
-            if (_board.BoardInfo[z][x] < 0) //ìGãÓ(älÇÍÇÈèÛë‘Ç…êÿÇËë÷Ç¶ÇƒÇ©ÇÁíTçıèIóπ)
+            if (Board.BoardInfo[z][x] < 0) //ìGãÓ(älÇÍÇÈèÛë‘Ç…êÿÇËë÷Ç¶ÇƒÇ©ÇÁíTçıèIóπ)
             {
                 GetableRay(x, z);
                 return false;
             }
-            else if (_board.BoardInfo[z][x] > 0) //ñ°ï˚ãÓ(âΩÇ‡ÇπÇ∏Ç…íTçıèIóπ)
+            else if (Board.BoardInfo[z][x] > 0) //ñ°ï˚ãÓ(âΩÇ‡ÇπÇ∏Ç…íTçıèIóπ)
                 return false;
         }
-        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        else if (Manager.Phase == GameManager.PlayerPhase.Black)
         {
-            if (_board.BoardInfo[z][x] > 0)
+            if (Board.BoardInfo[z][x] > 0)
             {
                 GetableRay(x, z);
                 return false;
             }
-            else if (_board.BoardInfo[z][x] < 0)
+            else if (Board.BoardInfo[z][x] < 0)
                 return false;
         }
         return false;
@@ -135,42 +121,33 @@ public class Bishop : MonoBehaviour
         if (x > 7)
             return false;
 
-        if (_board.BoardInfo[z][x] == 0)
+        if (Board.BoardInfo[z][x] == 0)
         {
-            _piece.Movable[z, x] = true;
+            Piece.Movable[z, x] = true;
             return true;
         }
 
         //Ç«Ç¡ÇøÇÃÉ^Å[ÉìÇ©
-        if (_manager.Phase == GameManager.PlayerPhase.White)
+        if (Manager.Phase == GameManager.PlayerPhase.White)
         {
-            if (_board.BoardInfo[z][x] < 0)
+            if (Board.BoardInfo[z][x] < 0)
             {
                 GetableRay(x, z);
                 return false;
             }
-            else if (_board.BoardInfo[z][x] > 0)
+            else if (Board.BoardInfo[z][x] > 0)
                 return false;
         }
-        else if (_manager.Phase == GameManager.PlayerPhase.Black)
+        else if (Manager.Phase == GameManager.PlayerPhase.Black)
         {
-            if (_board.BoardInfo[z][x] > 0)
+            if (Board.BoardInfo[z][x] > 0)
             {
                 GetableRay(x, z);
                 return false;
             }
-            else if (_board.BoardInfo[z][x] < 0)
+            else if (Board.BoardInfo[z][x] < 0)
                 return false;
         }
         return false;
-    }
-
-    void GetableRay(int x, int z)
-    {
-        //ÇªÇÃãÓÇälÇÍÇÈèÛë‘Ç…êÿÇËë÷Ç¶ÇÈ
-        if (Physics.Raycast(new Vector3(x, 5f, -z), Vector3.down, out RaycastHit hit, 20))
-        {
-            hit.collider.gameObject.GetComponent<MeshRenderer>().material = _getable;
-        }
     }
 }
