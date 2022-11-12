@@ -14,6 +14,7 @@ public class TestLoad : MonoBehaviour
     [SerializeField] private GameObject[] _pieces = new GameObject[12];
     [SerializeField] private GameObject[] _tile = new GameObject[2];
     [SerializeField] private GameObject _movableTile;
+
     //マスの配列
     private GameObject[,] _tiles = new GameObject[8, 8];
     //ジャグ配列を宣言
@@ -118,7 +119,7 @@ public class TestLoad : MonoBehaviour
             BoardInfo[i] = new int[8];
         }
 
-        _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _manager = GameObject.Find("Piece").GetComponent<GameManager>();
     }
 
     void OnLoadCsv(TextAsset csv)

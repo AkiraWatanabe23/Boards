@@ -7,9 +7,11 @@ public class PieceManager : MonoBehaviour
     [SerializeField] private Material _white;
     [SerializeField] private Material _black;
     [SerializeField] private Material _select;
+
     private GameManager _manager;
     private TestLoad _board;
     private bool[,] _movable = new bool[8, 8];
+
     public Material White { get => _white; set => _white = value; }
     public Material Black { get => _black; set => _black = value; }
     /// <summary> ‹î‚ð‘I‚ñ‚¾Žž‚ÉF‚ð•Ï‚¦‚é </summary>

@@ -1,30 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// ビショップの移動探索
+/// </summary>
 public class Bishop : MovementBase
 {
-    /// <summary>
-    /// 探索範囲の描画
-    /// </summary>
-    void Update()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (Piece.Movable[i, j] == true)
-                {
-                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
-                }
-                else
-                {
-                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
-                }
-            }
-        }
-    }
-
     public void Movement()
     {
         //前方向

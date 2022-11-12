@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// ナイトの移動探索
+/// </summary>
 public class Knight : MovementBase
 {
     //前後方向のマスからの移動差
@@ -10,27 +9,6 @@ public class Knight : MovementBase
     //左右方向のマスからの移動差
     readonly int[] ZnumHor = new int[] { -1, 1, -1, 1 };
     readonly int[] XnumHor = new int[] { -2, -2, 2, 2 };
-
-    /// <summary>
-    /// 探索範囲の描画
-    /// </summary>
-    void Update()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (Piece.Movable[i, j] == true)
-                {
-                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
-                }
-                else
-                {
-                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
-                }
-            }
-        }
-    }
 
     public void Movement()
     {

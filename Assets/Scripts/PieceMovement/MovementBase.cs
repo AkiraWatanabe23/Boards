@@ -6,6 +6,7 @@ public abstract class MovementBase : MonoBehaviour
 {
     [SerializeField] private Material _movable;
     [SerializeField] private Material _getable;
+
     public Material Movable { get => _movable; set => _movable = value; }
     public Material Getable { get => _getable; set => _getable = value; }
     public GameManager Manager { get; set; }
@@ -18,6 +19,27 @@ public abstract class MovementBase : MonoBehaviour
         Manager = GameObject.Find("Piece").GetComponent<GameManager>();
         Piece = GameObject.Find("Piece").GetComponent<PieceManager>();
         Board = GameObject.Find("Board").GetComponent<TestLoad>();
+    }
+
+    /// <summary>
+    /// ’Tõ”ÍˆÍ‚Ì•`‰æ
+    /// </summary>
+    void Update()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (Piece.Movable[i, j] == true)
+                {
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    Board.Tiles[i, j].GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
+        }
     }
 
     public void GetableRay(int x, int z)

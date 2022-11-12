@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
     [Tooltip("どっちのターンか")]
     [SerializeField] private Text _phase;
-    private int _beFrPhase; //(BeforeFramePhase)
+
+    private int _beFrPhase; //(BeforeFramePhase)...直前のフレームのターン
+
+    /// <summary> ターンの制御 </summary>
     public PlayerPhase Phase { get; set; }
     /// <summary>獲った駒 </summary>
     public GameObject GottenPiece { get; set; }
@@ -23,6 +26,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         _phase.text = Phase.ToString();
+        //ターンが切り替わったタイミングで勝利判定
         if ((int)Phase != _beFrPhase)
         {
             WinningCheck();
