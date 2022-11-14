@@ -12,9 +12,9 @@ public class Rook : MovementBase
         //前後方向
         for (int i = Piece.TileNumZ; i > 0; i--)
         {
-            if (MovableCheck(Piece.TileNumX, i - 1)) //true が返ってきたら処理を続行
+            if (MovableCheck(Piece.TileNumX, i - 1)) //true なら処理を続行
                 continue;
-            else                                      //false が返ってきたら処理を終了
+            else                                     //false なら処理を終了
                 break;
         }
 
